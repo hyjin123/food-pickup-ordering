@@ -2,6 +2,24 @@
 
 $(() => {
 
+  const renderIt = function (data) {
+    $("#main-container").append(`<p>${data.users[0].name}</p>`);
+  };
+
+  const showUsers = function() {
+    $.ajax({
+      url: "/api/users",
+      type: "GET",
+      dataType: "JSON",
+      success: (data) => {
+        console.log(data);
+        renderIt(data);
+      }
+    });
+  };
+
+  showUsers();
+
   // feature that shows the toggle button based on the vertical position
   $(document).scroll(function() {
     let position = $(this).scrollTop();
