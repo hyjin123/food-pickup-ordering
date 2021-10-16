@@ -15,3 +15,18 @@ body {
     rgba(163, 208, 219, 1) 100%
   );
 }
+
+#main-container {
+  display: flex;
+  flex-direction: row;
+  margin: 50px;
+  margin-top: 150px;
+}
+
+#section-container1 {
+  width: 65%;
+}
+
+.form-floating {
+  margin-bottom: 40px;
+}
