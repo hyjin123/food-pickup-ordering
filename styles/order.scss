@@ -1,0 +1,59 @@
+#order-container {
+  width: 30%;
+  height: 80%;
+  margin-left: 5%;
+  position: fixed;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-content: stretch;
+}
+
+.order-header {
+  height: 10%;
+  margin: 1em
+}
+
+.order-table {
+  width: 98%;
+  table-layout: fixed;
+  margin: 0.2em;
+}
+
+.order-item-name {
+  width: 60%;
+}
+
+.order-quantity {
+  width: 20%;
+  text-align: right;
+}
+
+
+.order-price {
+  width: 20%;
+  text-align: right;
+}
+
+.items {
+  margin: 40px 0;
+}
+
+.list-group-item {
+  padding: 40px 0;
+  text-align: center;
+}
+
+.order-footer {
+  height: 20%;
+  position: fixed;
+  bottom: 0.5em;
+  margin: 0.5em;
+}
+
+.order-button {
+  margin-top: px;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
