@@ -4,7 +4,23 @@
   object-fit: cover;
 }
 
-.card-body {
+.card-title {
   width: 100%;
-  height: 200px;
+  height: 50px;
+}
+
+.card-text {
+  width: 100%;
+  height: 100px;
+}
+
+.card-footer {
+  text-align: center;
+}
+
+.card-price {
+  text-align: center;
+  text-decoration: bold;
+  font-size: 1.3em;
+  height: 30px;
 }
