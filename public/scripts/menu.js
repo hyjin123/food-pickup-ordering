@@ -1,6 +1,6 @@
 $(() => {
 
-  const createMenuItem = function(menu) {
+  const createMenuItem = function(item) {
     let $markup = `
     <div class="col">
       <div class="card h-80">
@@ -20,7 +20,8 @@ $(() => {
 
   const renderMenuItems = function(menu) {
     for (const item of menu) {
-      createMenuItem(item);
+      const newItem = createMenuItem(item);
+      $("#menu").prepend(newItem);
     }
   }
 
