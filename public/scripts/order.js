@@ -30,14 +30,37 @@ $(document).ready(function() {
     return $selectedItem;
   };
 
+  const sumItem = (text, num) => {
+    const $item = $('<tr>').addClass('order-item');
+    const $name = $('<td>').addClass('order-item-name').text(text);
+    const $emptyCell = $('<td>').addClass('order-quantity');
+    const $summary = $('<td>').addClass('order-price').text(num);
+
+    $item.append($name, $emptyCell, $summary);
+
+    return $item;
+  }
+
   const renderItems = (items) => {
     const $itemContainer = $('#selected-items-container');
     // $itemContainer.empty();
+    let totalWtTax = 0;
 
     for (const item of items) {
+      console.log(item);
+      totalWtTax += item.price;
       const $selectedItem = addNewItem(item);
-      $itemContainer.prepend($selectedItem);
+      $itemContainer.append($selectedItem);
     }
+
+    const tax = Math.round(totalWtTax * 13) / 100;
+    const $subTotal = sumItem('Sub total', totalWtTax);
+    const $tax = sumItem('Tax (13%)', tax);
+    const $totalWTax = sumItem ('Total', Math.round((totalWtTax + tax) * 100) / 100);
+
+
+    $itemContainer.append($subTotal, $tax, $totalWTax);
+
   };
 });
 
