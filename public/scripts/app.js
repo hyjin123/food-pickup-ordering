@@ -18,7 +18,7 @@ $(() => {
     });
   };
 
-  showUsers();
+  //showUsers();
 
   // feature that shows the toggle button based on the vertical position
   $(document).scroll(function() {

@@ -56,3 +56,13 @@ nav a:hover {
   transform: scale(1.2) translate(0, 5px);
   cursor: pointer;
 }
+
+.dropdown-menu{ 
+  display: none;
+ }
+.dropdown-menu:hover{ 
+  display: block;
+}
+.dropdown-menu{ 
+  margin-top:0;
+}
