@@ -46,6 +46,7 @@ const widgetsRoutes = require("./routes/widgets");
 const ordersRoutes = require("./routes/orders");
 const menuRoutes = require("./routes/menu");
 const searchRoutes = require("./routes/search");
+const greetingRoutes = require("./routes/greetings");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -59,6 +60,7 @@ app.use("/api/search", searchRoutes(db));
 // Note: mount other resources here, using the same pattern above
 app.use("/login", usersRoutes(db));
 app.use("/register", usersRoutes(db));
+app.use("/greetings", greetingRoutes(db));
 
 // Home page
 // Warning: avoid creating more routes in this file!
