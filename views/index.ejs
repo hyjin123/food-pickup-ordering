@@ -80,41 +80,33 @@
         <h5 class="card-title">Your Order</h5>
       </header>
 
-      <table class="order-table">
-        <thead>
-          <tr>
-            <th scope="col" class="order-item-name">Item</th>
-            <th scope="col" class="order-quantity">qty</th>
-            <th scope="col" class="order-price">price</th>
+      <form id="order-now" action="/api/orders" method="POST">
+        <table class="order-table">
+          <thead>
+            <tr>
+              <th scope="col" class="order-item-name">Item</th>
+              <th scope="col" class="order-quantity">qty</th>
+              <th scope="col" class="order-price">price</th>
           </tr>
-        </thead>
-        <tbody id="selected-items-container">
-          <!-- <tr class="order-item">
-            <td class="order-item- name">Capuchino</td>
-            <td class="order-quantity">2</td>
-            <td class="order-price">10</td>
-          </tr> -->
-        </tbody>
-      </table>
+          </thead>
+          <tbody id="selected-items-container">
+          </tbody>
+        </table>
 
-      <!-- <ul class="list-group list-group-flush items">
-        <li class="order item">An item</li>
-        <li class="list-group-item">A second item</li>
-        <li class="list-group-item">A third item</li>
-      </ul> -->
-      <footer class="order-footer">
-        <section class="customer-note">
-          <label for="note">Any extra request?</label>
-          <input class="form-control" aria-describedby="noteHelpBlock">
-          <small id="noteHelpBlock" class="form-text text-muted">
+        <footer class="order-footer">
+          <section class="customer-note">
+            <label for="note">Any extra request?</label>
+            <input class="form-control" aria-describedby="noteHelpBlock">
+            <small id="noteHelpBlock" class="form-text text-muted">
               E.g. pick up time, using delivery service, etc.
-          </small>
-        </section>
+            </small>
+          </section>
 
-        <div class="order-button">
-         <button type="button" class="btn btn-primary">ORDER NOW</button>
-        </div>
-      </footer>
+          <div class="order-button">
+            <button type="submit" class="btn btn-primary">ORDER NOW</button>
+          </div>
+        </footer>
+      </form>
     </section>
 
   </main>

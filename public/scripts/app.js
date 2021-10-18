@@ -13,7 +13,7 @@ $(() => {
       type: "GET",
       dataType: "JSON",
       success: (data) => {
-        console.log(data);
+        // console.log(data);
         // renderIt(data);
       }
     });
