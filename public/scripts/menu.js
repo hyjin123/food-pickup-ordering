@@ -31,7 +31,7 @@ $(() => {
   // Ajax request to get JSON data, which is used to render the menu items using helper function
   const showMenu = function() {
     $.ajax({
-      url: "/api/widgets/menu",
+      url: "/api/menu",
       type: "GET",
       dataType: "JSON",
       success: (data) => {

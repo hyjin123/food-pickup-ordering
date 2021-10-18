@@ -25,22 +25,5 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
-
-  // GET route for menu items
-  router.get("/menu", (req, res) => {
-    let query = `SELECT * FROM menu_items`;
-    console.log(query);
-    db.query(query)
-      .then(data => {
-        const menuItems = data.rows;
-        res.json({ menuItems });
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
-  });
-
   return router;
 };
