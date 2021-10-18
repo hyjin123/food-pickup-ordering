@@ -84,7 +84,7 @@ module.exports = (db) => {
 
   // Route to logout
   router.post('/logout', (req, res) => {
-    req.session.userId = null;
+    req.session = null;
     //res.send({});
     res.render('../views/login.ejs'); 
   });
