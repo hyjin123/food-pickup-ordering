@@ -32,7 +32,8 @@ module.exports = (db) => {
 
   // Route to POST registration: will add user in DB and put the cookie.
   router.post('/register', (req, res) => {
-    const { name, email, phone_number, password, address, city, province, postal_code } = req.body;
+    const { name, email, phone_number, address, city, province, postal_code } = req.body;
+    const password = bcrypt.hashSync(req.body.password, 10);
     userContents = [name, email, phone_number, password, address, city, province, postal_code]
     db.query(`INSERT INTO customers (name, email, phone_number, password, address, city, province, postal_code)
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id ;`, userContents)
@@ -84,7 +85,8 @@ module.exports = (db) => {
   // Route to logout
   router.post('/logout', (req, res) => {
     req.session.userId = null;
-    res.send({});
+    //res.send({});
+    res.render('../views/login.ejs'); 
   });
 
   // Route to access login page
