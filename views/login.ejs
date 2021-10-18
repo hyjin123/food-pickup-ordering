@@ -51,7 +51,7 @@
     </div>
     <ul class="nav justify-content-end">
       <li class="nav-item">
-        <a class="nav-link" href="./api/users/login">LOGIN</a>
+        <a class="nav-link" href="./login">LOGIN</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">REGISTER</a>
@@ -59,36 +59,18 @@
     </ul>
   </nav>
   <!-- main container of the page -->
-  <main id="main-container">
-    <!-- search bar and the menu section -->
-    <section id="section-container1">
-      <div class="form-floating">
-        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-        <label for="floatingTextarea">Search</label>
-        <button type="button" class="btn btn-primary">Search</button>
-      </div>
-      <div id="menu" class="row row-cols-1 row-cols-md-3 g-4">
-        <!-- ALL the menu items are appended here using jQuery -->
-      </div>
-    </section>
-
-    <!-- order summary section -->
-    <section class ="card" id="section-container2">
-       <div class="card-body">
-         <h5 class="card-title">CART SUMMARY</h5>
-         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-       </div>
-       <ul class="list-group list-group-flush items">
-         <li class="list-group-item">An item</li>
-         <li class="list-group-item">A second item</li>
-         <li class="list-group-item">A third item</li>
-       </ul>
-       <div class="card-body order-button">
-        <button type="button" class="btn btn-primary">ORDER NOW $16</button>
-       </div>
-    </section>
-
-  </main>
+      <main style="margin: 1em">
+      <h3>Login</h3>
+      <script>"../public/scripts/login.js"</script>
+      <form action="/api/users/login" method="POST">
+        <br><label>Email address</label>
+        <input class="form-control" type="email" name="email" placeholder="Enter email" style="width: 300px">
+        <br><label>Password</label>
+        <input class="form-control" type="password" name="password" placeholder="Password" style="width: 300px">
+        <br><button type="submit" class="btn btn-primary">Login</button>
+      </form>
+      <br><p> Don't have an account? <a href="/register">Register</a></p>
+    </main>
 
   <footer>
 
