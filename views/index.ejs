@@ -52,16 +52,21 @@
     <div id="logo">
       <span>Cupcakez</span>
     </div>
-    <ul class="nav justify-content-end">
-      <% if(!userId) { %>
-        <li class="nav-item">
-          <a class="nav-link" href="/api/users/login">LOGIN</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/api/users/register">REGISTER</a>
-        </li>
-      <% } else { %> 
-        <li class="nav-item nav-link">Hello, <div id="greeting"></div> !</li>
+    <% if(!userId) { %>
+      <ul class="nav justify-content-end"></ul>
+      <li class="nav-item">
+        <a class="nav-link" href="/api/users/login">LOGIN</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/api/users/register">REGISTER</a>
+      </li>
+    </ul>
+    <% } else { %>
+      <span>
+        <p class="customer-greeting">Welcome </p>
+        <span class="customer-greeting"><span id="greeting"></span><p>!</p></span>
+      </span>
+      <ul class="nav justify-content-end">
         <li class="nav-item">
           <a class="nav-link" href="/api/users/history">MY ORDERS</a>
         </li>
@@ -70,7 +75,7 @@
             <button type="submit" class="btn btn-primary">LOGOUT</button>
           </form>
         </li>
-      <% } %> 
+      <% } %>
     </ul>
   </nav>
   <!-- main container of the page -->
