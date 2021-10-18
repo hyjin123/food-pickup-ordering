@@ -51,24 +51,36 @@
     </div>
     <ul class="nav justify-content-end">
       <li class="nav-item">
-        <a class="nav-link" href="./login">LOGIN</a>
+        <a class="nav-link" href="./api/users/login">LOGIN</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="./api/users/register">REGISTER</a>
+        <a class="nav-link" href="./register">REGISTER</a>
       </li>
     </ul>
   </nav>
   <!-- main container of the page -->
-      <main style="margin: 1em">
-      <h3>Login</h3>
-      <form action="/api/users/login" method="POST">
-        <br><label>Email address</label>
-        <input class="form-control" type="email" name="email" placeholder="Enter email" style="width: 300px">
-        <br><label>Password</label>
-        <input class="form-control" type="password" name="password" placeholder="Password" style="width: 300px">
-        <br><button type="submit" class="btn btn-primary">Login</button>
+      <main style="margin-top: 130px">
+      <h3>Create Account</h3>
+      <form action="register" method="POST">
+        <label>Name</label>
+        <input class="form-control" name="name" placeholder="Enter your name" maxlength="255" style="width: 300px">
+        <label>Phone Number</label>
+        <input class="form-control" name="phone_number" placeholder="+1(000)000-0000" maxlength="255" style="width: 300px">
+        <label>Email Address</label>
+        <input class="form-control" name="email" type="email" placeholder="Enter email" maxlength="255" style="width: 300px">
+        <label>Password</label>
+        <input class="form-control" name="password" type="password" placeholder="Password" style="width: 300px">
+        <label>Address</label>
+        <input class="form-control" name="address" placeholder="Address" maxlength="255" style="width: 300px">
+        <label>City</label>
+        <input class="form-control" name="city" placeholder="City" maxlength="255" style="width: 300px">
+        <label>Province</label>
+        <input class="form-control" name="province" placeholder="Province" maxlength="255" style="width: 300px">
+        <label>Postal Code</label>
+        <input class="form-control" name="postal_code" placeholder="Postal Code" maxlength="255" style="width: 300px">
+        <button type="submit" class="btn btn-primary">Register</button>
       </form>
-      <br><p> Don't have an account? <a href="./api/users/register">Register</a></p>
+      <br><p> Already have an account? <a href="/api/users/Login">Login</a></p>
     </main>
 
   <footer>

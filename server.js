@@ -52,6 +52,7 @@ app.use("/api/widgets", widgetsRoutes(db));
 app.use("/api/orders", ordersRoutes(db));
 // Note: mount other resources here, using the same pattern above
 app.use("/login", usersRoutes(db));
+app.use("/register", usersRoutes(db));
 
 // Home page
 // Warning: avoid creating more routes in this file!

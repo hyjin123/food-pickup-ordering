@@ -30,6 +30,25 @@ module.exports = (db) => {
       });
   });
 
+  // Route to POST registration: will add user in DB and put the cookie.
+  router.post('/register', (req, res) => {
+    const { name, email, phone_number, password, address, city, province, postal_code } = req.body;
+    userContents = [name, email, phone_number, password, address, city, province, postal_code]
+    db.query(`INSERT INTO customers (name, email, phone_number, password, address, city, province, postal_code)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id ;`, userContents)
+    .then(data => {
+      console.log(data.rows)
+      const id = data.rows[0].id;
+      req.session.userId = id;
+      res.redirect('/');
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+  });
+
   // Route to POST login: will put a cookie with the userId. 
   // To read the cookie, use: req.session.userId
   router.post('/login', (req, res) => {
@@ -68,6 +87,7 @@ module.exports = (db) => {
     res.send({});
   });
 
+  // Route to access login page
   router.get("/login", (req, res) => {
 
     console.log('cookie! req.session.userId', req.session.userId );
@@ -77,6 +97,18 @@ module.exports = (db) => {
       return res.redirect('../..');
     }
     res.render('../views/login.ejs'); 
+  });
+
+  // Route to access register page
+  router.get("/register", (req, res) => {
+
+    console.log('cookie! req.session.userId', req.session.userId );
+    const templateVars = { userId: req.session.userId };
+     if (templateVars.userId) {
+      console.log(templateVars)
+      return res.redirect('../..');
+    }
+    res.render('../views/register.ejs'); 
   });
 
   return router;
