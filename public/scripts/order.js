@@ -30,16 +30,16 @@ $(document).ready(function() {
     return $selectedItem;
   };
 
-  const sumItem = (text, num) => {
-    const $item = $('<tr>').addClass('order-item');
-    const $name = $('<td>').addClass('order-item-name').text(text);
-    const $emptyCell = $('<td>').addClass('order-quantity');
-    const $summary = $('<td>').addClass('order-price').text(num);
+  // const sumItem = (text, num) => {
+  //   const $item = $('<tr>').addClass('order-item');
+  //   const $name = $('<td>').addClass('order-item-name').text(text);
+  //   const $emptyCell = $('<td>').addClass('order-quantity');
+  //   const $summary = $('<td>').addClass('order-price').text(num);
 
-    $item.append($name, $emptyCell, $summary);
+  //   $item.append($name, $emptyCell, $summary);
 
-    return $item;
-  }
+  //   return $item;
+  // }
 
   const renderItems = (items) => {
     const $itemContainer = $('#selected-items-container');
@@ -54,12 +54,35 @@ $(document).ready(function() {
     }
 
     const tax = Math.round(totalWtTax * 13) / 100;
-    const $subTotal = sumItem('Sub total', totalWtTax);
-    const $tax = sumItem('Tax (13%)', tax);
-    const $totalWTax = sumItem ('Total', Math.round((totalWtTax + tax) * 100) / 100);
 
+    // const $subTotal = sumItem('Sub total', totalWtTax);
+    // const $tax = sumItem('Tax (13%)', tax);
+    // const $totalWTax = sumItem ('Total', Math.round((totalWtTax + tax) * 100) / 100);
 
-    $itemContainer.append($subTotal, $tax, $totalWTax);
+    const $markup = `
+      <tr class="order-item">
+        <td class="order-item- name">---</td>
+        <td class="order-quantity"></td>
+        <td class="order-price"></td>
+      </tr>
+      <tr class="order-item">
+        <td class="order-item- name">Sub total</td>
+        <td class="order-quantity"></td>
+        <td class="order-price">${totalWtTax}</td>
+      </tr>
+      <tr class="order-item">
+        <td class="order-item- name">Tax (13%)</td>
+        <td class="order-quantity"></td>
+        <td class="order-price">${tax}</td>
+      </tr>
+      <tr class="order-item">
+        <td class="order-item- name"><strong>Total</strong></td>
+        <td class="order-quantity"></td>
+        <td class="order-price"><strong>${Math.round((totalWtTax + tax) * 100) / 100}</strong></td>
+      </tr>
+    `
+    $itemContainer.append($markup);
+    // $itemContainer.append($subTotal, $tax, $totalWTax);
 
   };
 });
