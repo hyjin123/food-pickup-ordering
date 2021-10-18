@@ -66,7 +66,9 @@ app.use("/register", usersRoutes(db));
 
 app.get("/", (req, res) => {
   const isLoggedIn = req.session.userId;
-  isLoggedIn ? res.render('index') : res.render('login');
+  console.log(isLoggedIn)
+  const templateVars = { userId: isLoggedIn }
+  isLoggedIn ? res.render('index', templateVars) : res.render('login');
   //res.render("index");
 });
 

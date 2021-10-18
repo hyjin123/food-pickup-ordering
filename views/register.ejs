@@ -27,6 +27,7 @@
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
   <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
   <link rel="stylesheet" href="/styles/menu.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/register.css" type="text/css" />
 
   <!-- App JS -->
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
@@ -59,26 +60,34 @@
     </ul>
   </nav>
   <!-- main container of the page -->
-      <main style="margin-top: 130px">
+      <main class="register-main">
+      <container></container>
       <h3>Create Account</h3>
-      <form action="register" method="POST">
-        <label>Name</label>
-        <input class="form-control" name="name" placeholder="Enter your name" maxlength="255" style="width: 300px">
-        <label>Phone Number</label>
-        <input class="form-control" name="phone_number" placeholder="+1(000)000-0000" maxlength="255" style="width: 300px">
-        <label>Email Address</label>
-        <input class="form-control" name="email" type="email" placeholder="Enter email" maxlength="255" style="width: 300px">
-        <label>Password</label>
-        <input class="form-control" name="password" type="password" placeholder="Password" style="width: 300px">
-        <label>Address</label>
+      <form class="register-form" action="register" method="POST">
+        <container>
+        <div class="register-left">
+          <br><label>Name</label>
+          <input class="form-control" name="name" placeholder="Enter your name" maxlength="255" style="width: 300px">
+          <br><label>Phone Number</label>
+          <input class="form-control" name="phone_number" placeholder="+1(000)000-0000" maxlength="255" style="width: 300px">
+          <br><label>Email Address</label>
+          <input class="form-control" name="email" type="email" placeholder="Enter email" maxlength="255" style="width: 300px">
+          <br><label>Password</label>
+          <input class="form-control" name="password" type="password" placeholder="Password" style="width: 300px">
+        </div>
+          <div class="register-right">
+        <br><label>Address</label>
         <input class="form-control" name="address" placeholder="Address" maxlength="255" style="width: 300px">
-        <label>City</label>
+        <br><label>City</label>
         <input class="form-control" name="city" placeholder="City" maxlength="255" style="width: 300px">
-        <label>Province</label>
+        <br><label>Province</label>
         <input class="form-control" name="province" placeholder="Province" maxlength="255" style="width: 300px">
-        <label>Postal Code</label>
+        <br><label>Postal Code</label>
         <input class="form-control" name="postal_code" placeholder="Postal Code" maxlength="255" style="width: 300px">
-        <button type="submit" class="btn btn-primary">Register</button>
+        <br>
+        </div>
+      </container>
+        <button type="submit" class="btn btn-primary register-button">Register</button>
       </form>
       <br><p> Already have an account? <a href="/api/users/login">Login</a></p>
     </main>
