@@ -12,6 +12,7 @@
 .card-text {
   width: 100%;
   height: 100px;
+  overflow-wrap: break-word;
 }
 
 .card-footer {
@@ -24,3 +25,13 @@
   font-size: 1.3em;
   height: 30px;
 }
+
+.col:hover {
+  transition: all 0.5s ease-in-out;
+  transform: scale(1.05) translate(2px, 2px);
+}
+
+// .col:hover .card-img-top {
+//   display: fixed;
+//   height: 100px;
+// }

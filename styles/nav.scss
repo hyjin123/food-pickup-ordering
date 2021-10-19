@@ -70,12 +70,16 @@ nav a:hover {
   cursor: pointer;
 }
 
-.dropdown-menu{ 
+.dropdown-menu{
   display: none;
  }
-.dropdown-menu:hover{ 
+.dropdown-menu:hover{
   display: block;
 }
-.dropdown-menu{ 
+.dropdown-menu{
   margin-top:0;
+}
+
+#logo {
+  width: 18%;
 }
