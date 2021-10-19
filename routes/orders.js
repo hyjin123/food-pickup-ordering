@@ -9,7 +9,7 @@ module.exports = (db) => {
       JOIN order_items ON menu_item_id = menu_items.id
       JOIN orders ON order_id = orders.id
       WHERE order_id = 12
-      `;
+    `;
     console.log(query);
     db.query(query)
     .then(data => {
