@@ -46,7 +46,6 @@ const widgetsRoutes = require("./routes/widgets");
 const historyRoutes = require("./routes/history");
 const ordersRoutes = require("./routes/orders");
 const menuRoutes = require("./routes/menu");
-const searchRoutes = require("./routes/search");
 const greetingRoutes = require("./routes/greetings");
 const addToCartRoutes = require("./routes/add-to-cart");
 
@@ -56,7 +55,6 @@ app.use("/api/users", usersRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
 app.use("/api/orders", ordersRoutes(db));
 app.use("/api/menu", menuRoutes(db));
-app.use("/api/search", searchRoutes(db));
 app.use("/api/add-to-cart", addToCartRoutes(db));
 
 

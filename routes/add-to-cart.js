@@ -2,7 +2,6 @@ const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {
-  let item;
   router.post("/", (req, res) => {
     const productID = req.body.id;
     const queryParams = [productID];
@@ -13,8 +12,7 @@ module.exports = (db) => {
     `;
     db.query(query, queryParams)
       .then(data => {
-        item = data.rows;
-        console.log(item);
+        const item = data.rows;
         res.json({ item });
       })
       .catch(err => {
