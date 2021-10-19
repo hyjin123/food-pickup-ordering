@@ -14,7 +14,6 @@ module.exports = (db) => {
     db.query(query, queryParams)
       .then(data => {
         item = data.rows;
-        console.log(item);
         res.json({ item });
       })
       .catch(err => {
