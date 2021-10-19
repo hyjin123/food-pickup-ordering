@@ -7,7 +7,7 @@ module.exports = (db) => {
     const productID = req.body.id;
     const queryParams = [productID];
     let query = `
-    SELECT name, price
+    SELECT id, name, price
       FROM menu_items
       WHERE id = $1;
     `;

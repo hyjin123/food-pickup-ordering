@@ -11,9 +11,41 @@ $(() => {
     return $selectedItem;
   };
 
+  const $itemContainer = $('#selected-items-container');
+  const $sumOrder = $('#sum-order');
+  let totalWtTax = 0;
+
+  const sumOrder = (total) => {
+    const tax = Math.round(total * 13) / 100;
+    $sumOrder.empty();
+
+    const $markup = `
+      <tr class="order-item">
+        <td class="order-item-name">---</td>
+        <td class="order-quantity"></td>
+        <td class="order-price"></td>
+      </tr>
+      <tr class="order-item">
+        <td class="order-item-name">Sub total</td>
+        <td class="order-quantity"></td>
+        <td class="order-price">${Math.round((total) * 100) / 100}</td>
+      </tr>
+      <tr class="order-item">
+        <td class="order-item-name">Tax (13%)</td>
+        <td class="order-quantity"></td>
+        <td class="order-price">${tax}</td>
+      </tr>
+      <tr class="order-item">
+        <td class="order-item-name"><strong>Total</strong></td>
+        <td class="order-quantity"></td>
+        <td class="order-price"><strong>${Math.round((total + tax) * 100) / 100}</strong></td>
+      </tr>
+    `
+    $sumOrder.append($markup);
+    return $sumOrder;
+  };
+
   const renderItems = (itemName, itemQuantity, itemPrice) => {
-    const $itemContainer = $('#selected-items-container');
-    // $itemContainer.empty();
     const $selectedItem = addNewItem(itemName, itemQuantity, itemPrice);
     $itemContainer.prepend($selectedItem);
 
@@ -29,9 +61,12 @@ $(() => {
         id: event.target.value
       },
       success: (data) => {
+        console.log('data on click: ', data.item);
         const itemName = data.item[0].name;
         const itemPrice = data.item[0].price;
+        totalWtTax += itemPrice;
         renderItems(itemName, 1, itemPrice);
+        sumOrder(totalWtTax);
       },
 
       error: (err) => {
