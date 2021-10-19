@@ -62,6 +62,7 @@ $(() => {
       },
       success: (data) => {
         console.log('data on click: ', data.item);
+        console.log(data);
         const itemName = data.item[0].name;
         const itemPrice = data.item[0].price;
         totalWtTax += itemPrice;
