@@ -12,7 +12,7 @@ module.exports = (db) => {
     `;
     db.query(query, queryParams)
       .then(data => {
-        item = data.rows;
+        const item = data.rows;
         res.json({ item });
       })
       .catch(err => {
@@ -20,10 +20,6 @@ module.exports = (db) => {
           .status(500)
           .json({ error: err.message });
       });
-  });
-
-  router.get("/", (req, res) => {
-    res.send(req.body);
   });
 
 return router;
