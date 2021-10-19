@@ -12,7 +12,7 @@ $(() => {
           <p class="card-text card-price">$${item.price}</p>
         </div>
         <div class="card-footer">
-         <button type="button" class="btn btn-primary">ADD TO CART</button>
+          <button type="submit" class="btn btn-primary add-to-cart" name="item" value="${item.id}">ADD TO CART</button>
         </div>
       </div>
     </div>

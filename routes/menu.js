@@ -5,7 +5,9 @@ module.exports = (db) => {
 
   // GET route for menu items
   router.get("/", (req, res) => {
-    let query = `SELECT * FROM menu_items`;
+    let query = `
+    SELECT * FROM menu_items
+    WHERE in_stock = TRUE`;
     console.log(query);
     db.query(query)
       .then(data => {
