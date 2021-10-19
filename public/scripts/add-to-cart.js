@@ -29,6 +29,7 @@ $(() => {
         id: event.target.value
       },
       success: (data) => {
+        console.log(data);
         const itemName = data.item[0].name;
         const itemPrice = data.item[0].price;
         renderItems(itemName, 1, itemPrice);
