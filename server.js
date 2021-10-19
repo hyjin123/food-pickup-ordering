@@ -43,6 +43,7 @@ app.use(cookieSession({
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");
 const widgetsRoutes = require("./routes/widgets");
+const historyRoutes = require("./routes/history");
 const ordersRoutes = require("./routes/orders");
 const menuRoutes = require("./routes/menu");
 const searchRoutes = require("./routes/search");
@@ -60,6 +61,7 @@ app.use("/api/add-to-cart", addToCartRoutes(db));
 
 
 // Note: mount other resources here, using the same pattern above
+app.use("/history", historyRoutes(db));
 app.use("/login", usersRoutes(db));
 app.use("/register", usersRoutes(db));
 app.use("/greetings", greetingRoutes(db));
