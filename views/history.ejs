@@ -63,7 +63,7 @@
       </span>
       <ul class="nav justify-content-end">
         <li class="nav-item">
-          <a class="nav-link" href="/history">MY ORDERS</a>
+          <a class="nav-link" href="/">STORE</a>
         </li>
         <li class="nav-item">
           <form action="/api/users/logout" method="POST">
@@ -113,6 +113,7 @@
           <th scope="col">Quantity</th>
           <th scope="col">Price</th>
           <th scope="col">Buy Again</th>
+          <th scope="col">Status</th>
         </tr>
       </thead>
       <tbody>
@@ -124,7 +125,7 @@
             <td><%= order.quantity %></td>
             <td><%= Number.parseFloat(order.price).toFixed(2) %></td>
             <td><%= Number.parseFloat(orders['orderId-'+order.order_id].buyAgain).toFixed(2) %></td>
-
+            <td><%= orders['orderId-'+order.order_id].status %></td>
           </tr>
           <% } %>
       </tbody>
