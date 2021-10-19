@@ -63,6 +63,8 @@ $(() => {
         id: event.target.value
       },
       success: (data) => {
+        console.log('data on click: ', data.item);
+        console.log(data);
         const itemID = data.item[0].id;
         const itemName = data.item[0].name;
         const itemPrice = data.item[0].price;
