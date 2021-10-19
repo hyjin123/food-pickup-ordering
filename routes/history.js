@@ -7,6 +7,11 @@
 
 const express = require('express');
 const router  = express.Router();
+const cookieSession = require('cookie-session');
+express().use(cookieSession({
+  name: 'session',
+  keys: ['some-veryveryveryvery-long-key-1', 'not-so-long key 2, but ok!']
+}));
 
 module.exports = (db) => {
 
@@ -17,7 +22,7 @@ module.exports = (db) => {
       JOIN menu_items ON menu_item_id = menu_items.id
       WHERE customer_id = $1
         AND created_at + prep_time < Now();`
-    const params = [3] // replace with userID
+    const params = [req.session.userId] // replace with userID
 
     db.query(query, params)
       .then(data => {
@@ -36,7 +41,7 @@ module.exports = (db) => {
             orders[orderId].buyAgain += order.price * order.quantity;
           }
         }
-        const templateVars = { fullHistory, orders }; // will add userID later
+        const templateVars = { fullHistory, orders, userId: req.session.userId }; // will add userID later
         console.log(templateVars)
         res.render("../views/history.ejs", templateVars)
       })

@@ -47,29 +47,47 @@
     <div id="logo">
       <span>Cupcakez</span>
     </div>
-    <ul class="nav">
-    <li class="nav-item dropdown">
+    <% if(!userId) { %>
+      <ul class="nav justify-content-end"></ul>
+      <li class="nav-item">
+        <a class="nav-link" href="/api/users/login">LOGIN</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/api/users/register">REGISTER</a>
+      </li>
+    </ul>
+    <% } else { %>
+      <span>
+        <p class="customer-greeting">Welcome </p>
+        <span class="customer-greeting"><span id="greeting"></span><p>!</p></span>
+      </span>
+      <ul class="nav justify-content-end">
+        <li class="nav-item">
+          <a class="nav-link" href="/history">MY ORDERS</a>
+        </li>
+        <li class="nav-item">
+          <form action="/api/users/logout" method="POST">
+            <button type="submit" class="btn btn-primary">LOGOUT</button>
+          </form>
+        </li>
+      <% } %>
+    </ul>
+  </nav>
+
+  <!-- dropdown example -->
+  <!-- <li class="nav-item dropdown">
       <a class="nav-link  dropdown-toggle" href="#" data-bs-toggle="dropdown">My Orders</a>
       <ul class="dropdown-menu">
         <% for(let order in orders) { %>
           <li><a class="dropdown-item" href="#"><%= orders[order].date.toDateString() %></a></li>
           <% } %>
         </ul>
-      </li>
-    </ul>
-      <ul class="nav justify-content-end">
-      <li class="nav-item">
-        <a class="nav-link" href="#">LOGIN</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">REGISTER</a>
-      </li>
-    </ul>
-  </nav>
+      </li> -->
+
   <!-- main container of the page -->
   <main id="main-container">
 
-    <table class="table table-hover">
+<!--     <table class="table table-hover">
       <thead>
         <tr>
           <th scope="col">Date</th>
@@ -84,9 +102,9 @@
           </tr>
           <% } %>
       </tbody>
-    </table>
+    </table> -->
 
-    <table class="table table-hover">
+    <table class="table table-hover" style="text-align: center;">
       <thead>
         <tr>
           <th scope="col">Order</th>
@@ -104,8 +122,8 @@
             <td><%= order.date.toDateString() %></td>
             <td><%= order.item_name %></td>
             <td><%= order.quantity %></td>
-            <td><%= order.price %></td>
-            <td><%= orders['orderId-'+order.order_id].buyAgain %></td>
+            <td><%= Number.parseFloat(order.price).toFixed(2) %></td>
+            <td><%= Number.parseFloat(orders['orderId-'+order.order_id].buyAgain).toFixed(2) %></td>
 
           </tr>
           <% } %>
