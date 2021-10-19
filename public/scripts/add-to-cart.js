@@ -43,8 +43,8 @@ $(() => {
         <td class="order-quantity"></td>
         <td class="order-price"><strong>${Math.round((total + tax) * 100) / 100}</strong></td>
       </tr>
-    `
-    $sumOrder.append($markup);
+      `
+      $sumOrder.append($markup);
     return $sumOrder;
   };
 
@@ -63,8 +63,7 @@ $(() => {
         id: event.target.value
       },
       success: (data) => {
-        console.log('data on click: ', data.item);
-        console.log(data);
+        const itemID = data.item[0].id;
         const itemName = data.item[0].name;
         const itemPrice = data.item[0].price;
         totalWtTax += itemPrice;
@@ -105,4 +104,3 @@ $(() => {
   });
 })
 
-  // const itemID = data.item[0].id;
