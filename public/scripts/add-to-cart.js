@@ -101,6 +101,7 @@ $(() => {
         console.log(`Error details: ${err}`);
       }
     });
+    alert('Order sent. Do you want duplicated order?');
   });
 })
 

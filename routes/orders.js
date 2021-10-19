@@ -15,31 +15,35 @@ module.exports = (db) => {
     VALUES ($1, now()::date, $2) RETURNING id ;`;
     db.query(query, [req.session.userId, req.body.note])
       .then(data => {
+
+        const id = data.rows[0].id;
+        const orderedList = req.body.items;
+
         console.log('orderbutton return: ',data.rows);
-        return data.rows[0].id;
-      })
-      .then(id => {
         console.log('order id: ',id);
+        console.log('orderedList: ',orderedList, 'length: ', orderedList.length);
+
         let queryParams = [];
         let queryString = `
         INSERT INTO order_items (order_id, menu_item_id, quantity)
         VALUES `;
 
-        for (const index = 0; index < req.body.items.length; index++) {
+        for (let index = 0; index < orderedList.length; index++) {
           queryString += `($${3 * index + 1}, $${3 * index + 2}, $${3 * index + 3})`;
-          if (index < req.body.items.length - 2) {
+          if (index < orderedList.length - 1) {
             queryString +=`, `;
           } else {
             queryString += ` RETURNING *;`;
           }
-          queryParams.push(id, req.body.items[index].item_id, req.body.items[index].quantity);
+          queryParams.push(id, Number(orderedList[index].item_id), Number(orderedList[index].quantity));
         }
 
         console.log('queryString; ',queryString, 'queryParams: ', queryParams );
 
-        return db.query(queryString, queryParams)
+        db.query(queryString, queryParams)
           .then(data => {
-            console.log(data);
+            console.log(data.rows);
+            return data.rows;
           })
           .catch(err => {
             res
