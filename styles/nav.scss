@@ -38,6 +38,19 @@ nav a:hover {
   color: #3565B0;
 }
 
+.customer-greeting{
+  display: flex;
+  flex-direction: row;
+  font-size: 1.2em;
+  color: #3565B0;
+}
+
+.user-nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 #toggle-button {
   position: fixed;
   bottom: 20px;

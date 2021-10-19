@@ -9,6 +9,8 @@ const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {
+
+  //Example GET route
   router.get("/", (req, res) => {
     let query = `SELECT * FROM widgets`;
     console.log(query);

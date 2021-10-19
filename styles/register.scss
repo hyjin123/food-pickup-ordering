@@ -1,0 +1,25 @@
+.register-main {
+  margin-top: 130px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+}
+.register-form container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+
+}
+.register-left {
+  width: 40%;
+  margin-right: 10%
+}
+
+.register-right {
+  width: 40%;
+  margin-left: 10%
+}
+
+.register-button {
+  left: 50%;
+}
