@@ -14,6 +14,9 @@ $(() => {
   const $itemContainer = $('#selected-items-container');
   const $sumOrder = $('#sum-order');
   let totalWtTax = 0;
+  const order_list = {
+    items: []
+  }; //record all data of this customer order
 
   const sumOrder = (total) => {
     const tax = Math.round(total * 13) / 100;
@@ -48,7 +51,6 @@ $(() => {
   const renderItems = (itemName, itemQuantity, itemPrice) => {
     const $selectedItem = addNewItem(itemName, itemQuantity, itemPrice);
     $itemContainer.prepend($selectedItem);
-
   };
 
   // Once client clicks on the add-to-cart button, the second parameter is there as it is dynamically rendered
@@ -61,18 +63,43 @@ $(() => {
         id: event.target.value
       },
       success: (data) => {
-        console.log('data on click: ', data.item);
+        const itemID = data.item[0].id;
         const itemName = data.item[0].name;
         const itemPrice = data.item[0].price;
         totalWtTax += itemPrice;
         renderItems(itemName, 1, itemPrice);
         sumOrder(totalWtTax);
+        order_list.items.push({
+          item_id: itemID,
+          quantity: 1
+        });
       },
 
       error: (err) => {
         console.log(`Error details: ${err}`);
       }
     });
-  })
+  });
 
+  //Record customer note for order POST
+  $('#customer-note').change(() => {
+    order_list.note = $('#customer-note').val();
+  });
+
+  // Trigger order once customer click Order now
+  $(document).on("click", ".order-button", function(event) {
+    event.preventDefault();
+    $.ajax('/api/orders', {
+      method: 'POST',
+      dataType: 'JSON',
+      data: order_list,
+      success: (data) => {
+        console.log(data);
+      },
+
+      error: (err) => {
+        console.log(`Error details: ${err}`);
+      }
+    });
+  });
 })

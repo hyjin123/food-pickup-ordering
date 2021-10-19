@@ -69,7 +69,7 @@
       </span>
       <ul class="nav justify-content-end">
         <li class="nav-item">
-          <a class="nav-link" href="/history">MY ORDERS</a>
+          <a class="nav-link" href="/api/users/history">MY ORDERS</a>
         </li>
         <li class="nav-item">
           <form action="/api/users/logout" method="POST">
@@ -115,7 +115,7 @@
         <footer class="order-footer">
           <section class="customer-note">
             <label for="note">Any extra request?</label>
-            <input class="form-control" aria-describedby="noteHelpBlock">
+            <input class="form-control" id='customer-note' type='text' aria-describedby="noteHelpBlock">
             <small id="noteHelpBlock" class="form-text text-muted">
               E.g. pick up time, using delivery service, etc.
             </small>
