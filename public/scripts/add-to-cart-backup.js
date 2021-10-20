@@ -2,11 +2,11 @@ $(() => {
 
   const addNewItem = (itemName, itemQuantity, itemPrice) => {
     const $selectedItem = $('<tr>').addClass('order-item');
-    const $itemName = $('<td>').addClass('order-item-name').text(itemName);
+    const $itemName$ = $('<td>').addClass('order-item-name').text(itemName);
     const $quantity = $('<td>').addClass('order-quantity').text(itemQuantity);
-    const $price = $('<td>').addClass('order-price').text(Number.parseFloat(itemPrice).toFixed(2));
+    const $price = $('<td>').addClass('order-price').text(itemPrice);
 
-    $selectedItem.append($itemName, $quantity, $price);
+    $selectedItem.append($itemName$, $quantity, $price);
 
     return $selectedItem;
   };
@@ -14,7 +14,7 @@ $(() => {
   const $itemContainer = $('#selected-items-container');
   const $sumOrder = $('#sum-order');
   let totalWtTax = 0;
-  const orderList = {
+  const order_list = {
     items: []
   }; //record all data of this customer order
 
@@ -31,7 +31,7 @@ $(() => {
       <tr class="order-item">
         <td class="order-item-name">Sub total</td>
         <td class="order-quantity"></td>
-        <td class="order-price">${Number.parseFloat(total).toFixed(2)}</td>
+        <td class="order-price">${Math.round((total) * 100) / 100}</td>
       </tr>
       <tr class="order-item">
         <td class="order-item-name">Tax (13%)</td>
@@ -48,51 +48,38 @@ $(() => {
     return $sumOrder;
   };
 
-  // Render all items using the obj as reference
-  const renderItems = () => {
-    $itemContainer.empty();
-    let $selectedItem;
-    for (const item of orderList.items) {
-      $selectedItem = addNewItem(item.name, item.quantity, item.price);
-      $itemContainer.prepend($selectedItem);
-    }
+  const renderItems = (itemName, itemQuantity, itemPrice) => {
+    const $selectedItem = addNewItem(itemName, itemQuantity, itemPrice);
+    $itemContainer.prepend($selectedItem);
   };
-  // Call function to ensure that when there's content in the obj
-  // (ex. reloads page), the items will be shown in cart
-  renderItems();
 
-  // Functions to build the mechanism for the .ajax post
-  // Checks if the item is in cart (for changeCart() function)
-  const isInCart = (itemId) => {
+  const isInCart = (itemID) => {
     const itemsInCart = [];
-    for(const item of orderList.items) {
+    for(const item of order_list.items) {
       itemsInCart.push(item.item_id);
     }
-    if (itemsInCart.includes(itemId)) {
+    if (itemsInCart.includes(itemID)) {
       return true;
     }
     return false;
   }
 
-  // Currently, only increases quantity, but may hold option to decrease later
-  const changeQuantity = (itemId) => {
-    for(const item of orderList.items) {
-      if (item.item_id === itemId) {
+  const changeQuantity = (itemID) => {
+    for(const item of order_list.items) {
+      if (item.item_id === itemID) {
         item.quantity ++;
       }
     }
   }
 
-  // Makes changes in the cart, for the .ajax post
-  const changeCart = (itemId, itemName, itemPrice) => {
-    if (isInCart(itemId)) {
-      return changeQuantity(itemId);
+  const changeCart = (itemID) => {
+    console.log(order_list)
+    if (isInCart(itemID)) {
+      return changeQuantity(itemID);
     } else {
-      return orderList.items.push({
-        item_id: itemId,
-        name: itemName,
-        quantity: 1,
-        price: itemPrice
+      return order_list.items.push({
+        item_id: itemID,
+        quantity: 1
       });
     }
   }
@@ -110,13 +97,13 @@ $(() => {
         id: event.target.value
       },
       success: (data) => {
-        const itemId = data.item[0].id;
+        const itemID = data.item[0].id;
         const itemName = data.item[0].name;
         const itemPrice = data.item[0].price;
         totalWtTax += itemPrice;
+        renderItems(itemName, 1, itemPrice);
         sumOrder(totalWtTax);
-        changeCart(itemId, itemName, itemPrice)
-        renderItems();
+        changeCart(itemID)
       },
 
       error: (err) => {
@@ -127,7 +114,7 @@ $(() => {
 
   //Record customer note for order POST
   $('#customer-note').change(() => {
-    orderList.note = $('#customer-note').val();
+    order_list.note = $('#customer-note').val();
   });
 
   // Trigger order once customer click Order now
@@ -144,7 +131,7 @@ $(() => {
     $.ajax('/api/orders', {
       method: 'POST',
       dataType: 'JSON',
-      data: orderList,
+      data: order_list,
       success: (data) => {
         console.log(data);
       },

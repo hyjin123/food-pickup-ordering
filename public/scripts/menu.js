@@ -9,7 +9,7 @@ $(() => {
         <div class="card-body">
           <h5 class="card-title">${item.name}</h5>
           <p class="card-text">${item.description}</p>
-          <p class="card-price">$${item.price}</p>
+          <p class="card-price">$${Number.parseFloat(item.price).toFixed(2)}</p>
         </div>
         <div class="card-footer">
           <button type="submit" class="btn btn-primary add-to-cart" name="item" value="${item.id}">ADD TO CART</button>
