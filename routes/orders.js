@@ -9,7 +9,6 @@ express().use(cookieSession({
 
 module.exports = (db) => {
   router.post("/", (req, res) => {
-    console.log('req: ',req.body);
 
     let query = `INSERT INTO orders (customer_id, created_at, note)
     VALUES ($1, now()::date, $2) RETURNING id ;`;
@@ -18,10 +17,6 @@ module.exports = (db) => {
 
         const id = data.rows[0].id;
         const orderedList = req.body.items;
-
-        console.log('orderbutton return: ',data.rows);
-        console.log('order id: ',id);
-        console.log('orderedList: ',orderedList, 'length: ', orderedList.length);
 
         let queryParams = [];
         let queryString = `
@@ -38,11 +33,9 @@ module.exports = (db) => {
           queryParams.push(id, Number(orderedList[index].item_id), Number(orderedList[index].quantity));
         }
 
-        console.log('queryString; ',queryString, 'queryParams: ', queryParams );
-
         db.query(queryString, queryParams)
           .then(data => {
-            console.log(data.rows);
+            // console.log(data.rows);
             return data.rows;
           })
           .catch(err => {

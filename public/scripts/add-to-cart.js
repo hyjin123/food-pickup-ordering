@@ -56,6 +56,9 @@ $(() => {
   // Once client clicks on the add-to-cart button, the second parameter is there as it is dynamically rendered
   $(document).on("click", ".add-to-cart", function(event) {
     event.preventDefault();
+
+    $('.message-to-customer').hide();
+
     $.ajax('/api/add-to-cart', {
       method: 'POST',
       dataType: 'JSON',
@@ -89,6 +92,14 @@ $(() => {
   // Trigger order once customer click Order now
   $(document).on("click", ".order-button", function(event) {
     event.preventDefault();
+
+    //Clear order content after submitting and display message to customer
+    $itemContainer.empty();
+    $sumOrder.empty();
+    $('#customer-note').val('');
+    $('.message-to-customer').text('Thank you for your order! You will receive our confirmation shortly.');
+    $('.message-to-customer').show();
+
     $.ajax('/api/orders', {
       method: 'POST',
       dataType: 'JSON',
@@ -101,7 +112,6 @@ $(() => {
         console.log(`Error details: ${err}`);
       }
     });
-    alert('Order sent. Do you want duplicated order?');
   });
 })
 
