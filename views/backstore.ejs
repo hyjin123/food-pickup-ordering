@@ -45,31 +45,10 @@
   <!-- Top nav bar (fixed) -->
   <nav>
   <div id="logo"><img id="logo" src="/images/cupcake.png">Cup N' CakeZ</div>
-    <% if(!userId) { %>
-      <ul class="nav justify-content-end"></ul>
-      <li class="nav-item">
-        <a class="nav-link" href="/api/users/login">LOGIN</a>
+  <ul class="nav justify-content-end"></ul>
+  <li class="nav-item">
+        <p>*** Welcome to the System ***</p>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/api/users/register">REGISTER</a>
-      </li>
-    </ul>
-    <% } else { %>
-      <span>
-        <p class="customer-greeting">Welcome </p>
-        <span class="customer-greeting"><span id="greeting"></span><p>!</p></span>
-      </span>
-      <ul class="nav justify-content-end">
-        <li class="nav-item">
-          <a class="nav-link" href="/">STORE</a>
-        </li>
-        <li class="nav-item">
-          <form action="/api/users/logout" method="POST">
-            <button type="submit" class="btn btn-primary">LOGOUT</button>
-          </form>
-        </li>
-      <% } %>
-    </ul>
   </nav>
 
   <!-- main container of the page -->
@@ -78,7 +57,7 @@
     <ul class="container">
       <% for(let order in orders) { %>
         <div class="list-group">
-          <li class="list-group-item history-title"><%= `${orders[order].date.toDateString()} --- ${orders[order].status} `%></li>
+          <li class="list-group-item history-title"><%= `Order ID: ${orders[order].orderId} --- At: ${orders[order].date.toDateString()} --- Status: ${orders[order].status} `%></li>
           <li class="list-group-item">
             <table class="table table-sm table-borderless" style="text-align: center;">
               <tbody>
@@ -91,10 +70,14 @@
             </table>
           </li>
           <li class="list-group-item history-title"> <%= `${orders[order].noteInOrder}` %></li>
-<!--           <a href="#" 
-          id="order_again" 
-          class="list-group-item list-group-item-action" 
-          style="text-align: right;">Order Again for $ <%= Number.parseFloat(orders[order].buyAgain).toFixed(2) %></a> -->
+           <li class="list-group-item" style="text-align: left;">Send Message to <%= orders[order].customerName %>
+          <form class="form-inline" action="/api/owner/messages" method="POST">
+            <label>Tel.:</label>
+            <input class="form-control" name="customerPhone" value="<%= `${orders[order].customerPhone}` %> " style="width: 300px">
+            <label>Message:</label>
+            <input class="form-control" name="msgToCustomer" style="width: 600px">
+            <button type="submit" class="btn btn-primary">Send!</button>
+          </li>
         </div>
         <br>
         <% } %>
