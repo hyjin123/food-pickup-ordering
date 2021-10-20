@@ -16,10 +16,12 @@ $(() => {
   let totalWtTax = 0;
   const orderList = {
     items: []
-  }; //record all data of this customer order
+  }; // object to store data of this customer's order
+  let tip = 0;
 
   const sumOrder = (total) => {
     const tax = Math.round(total * 13) / 100;
+    tipAmount = Math.round(total * tip) / 100;
     $sumOrder.empty();
 
     const $markup = `
@@ -39,12 +41,19 @@ $(() => {
         <td class="order-price">${tax}</td>
       </tr>
       <tr class="order-item">
+      <td class="order-item-name">Tip</td>
+      <td class="order-quantity"><input id='tip' type='number' min='0' max='100' placeholder="%"></td>
+      <td class="order-price" id='tip-amount'>${Number.parseFloat(tipAmount).toFixed(2)}</td>
+      </tr>
+      <tr class="order-item">
         <td class="order-item-name"><strong>Total</strong></td>
         <td class="order-quantity"></td>
-        <td class="order-price"><strong>${Math.round((total + tax) * 100) / 100}</strong></td>
-      </tr>
+        <td class="order-price"><strong>${Math.round((total + tax + tipAmount) * 100) / 100}</strong></td>
+        </tr>
       `
       $sumOrder.append($markup);
+      orderList.tip = tipAmount;
+      console.log('Tip: ', orderList.tip);
     return $sumOrder;
   };
 
@@ -118,6 +127,7 @@ $(() => {
         sumOrder(totalWtTax);
         changeCart(itemId, itemName, itemPrice)
         renderItems();
+        console.log('tip: ', tip);
       },
 
       error: (err) => {
@@ -129,6 +139,12 @@ $(() => {
   //Record customer note for order POST
   $('#customer-note').change(() => {
     orderList.note = $('#customer-note').val();
+  });
+
+  //Record customer input for tip
+  $(document).on('change', () => {
+    tip = $('#tip').val();
+    sumOrder(totalWtTax);
   });
 
   // Trigger order once customer click Order now
@@ -147,7 +163,8 @@ $(() => {
       dataType: 'JSON',
       data: orderList,
       success: (data) => {
-        console.log(data);
+        // console.log(data);
+        orderList.items = [];
       },
 
       error: (err) => {
@@ -156,4 +173,3 @@ $(() => {
     });
   });
 })
-

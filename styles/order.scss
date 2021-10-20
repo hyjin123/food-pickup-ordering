@@ -37,7 +37,6 @@
   text-align: right;
 }
 
-
 .order-price {
   width: 20%;
   text-align: right;
@@ -63,4 +62,10 @@
   position: fixed;
   bottom: 0;
   right: 1em;
+}
+
+#tip {
+  width: 2em;
+  border: none;
+  border-bottom: salmon solid;
 }
