@@ -1,9 +1,11 @@
 const express = require('express');
 const router  = express.Router();
+const MessagingResponse = require('twilio').twiml.MessagingResponse;
 // require('dotenv').config();
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require('twilio')(accountSid, authToken);
+
 
 module.exports = (db) => {
 
@@ -23,6 +25,15 @@ module.exports = (db) => {
     //  })
     //  .then(message => console.log(message.sid));
 
+    });
+
+    router.post('/sms', (req, res) => {
+      const twiml = new MessagingResponse();
+
+      twiml.message('I have received your message!');
+
+      res.writeHead(200, {'Content-Type': 'text/xml'});
+      res.end(twiml.toString());
     });
 
   return router;
