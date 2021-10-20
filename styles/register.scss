@@ -3,21 +3,22 @@
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
+  align-items: center;
 }
 .register-form container {
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-around;
+  justify-content: center;
 
 }
 .register-left {
-  width: 40%;
-  margin-right: 10%
+  width: 45%;
+  margin-right: 5%
 }
 
 .register-right {
-  width: 40%;
-  margin-left: 10%
+  width: 45%;
+  margin-left: 5%
 }
 
 .register-button {

@@ -9,7 +9,7 @@ express().use(cookieSession({
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    let query = `SELECT name FROM users WHERE id = $1;`;
+    let query = `SELECT name FROM customers WHERE id = $1;`;
     db.query(query, [req.session.userId])
       .then(data => {
         const customerName = data.rows[0].name;
