@@ -49,6 +49,7 @@ const menuRoutes = require("./routes/menu");
 const greetingRoutes = require("./routes/greetings");
 const addToCartRoutes = require("./routes/add-to-cart");
 const twilioRoutes = require("./routes/twilio");
+const backstoreRoutes = require("./routes/backstore");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -65,6 +66,7 @@ app.use("/history", historyRoutes(db));
 app.use("/login", usersRoutes(db));
 app.use("/register", usersRoutes(db));
 app.use("/greetings", greetingRoutes(db));
+app.use("/backstore", backstoreRoutes(db));
 
 // Home page
 // Warning: avoid creating more routes in this file!

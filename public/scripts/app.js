@@ -36,18 +36,11 @@ $(() => {
   });
 
   // Feature to greet the user in the main page
-  const renderGreeting = function (data) {
-    $("#greeting").append(`<p>${data.users[0].name}</p>`);
-  };
-
   const greetUser = function() {
     $.ajax({
-      url: "/api/users",
-      type: "GET",
-      dataType: "JSON",
+      url: "/greetings",
       success: (data) => {
-        console.log(data);
-        renderGreeting(data);
+        $("#greeting").append(`<p>${data.customerName}</p>`);
       }
     });
   };
