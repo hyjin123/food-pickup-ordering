@@ -21,7 +21,7 @@ module.exports = (db) => {
     .create({
        body: textMessage,
        from: '+16137042914',
-       to: '+14372180544'
+       to: '+16399949382'
      })
      .then(message => console.log(message.sid));
 
