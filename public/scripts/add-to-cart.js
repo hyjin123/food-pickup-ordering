@@ -53,10 +53,41 @@ $(() => {
     $itemContainer.prepend($selectedItem);
   };
 
+  const isInCart = (itemID) => {
+    const itemsInCart = [];
+    for(const item of order_list.items) {
+      itemsInCart.push(item.item_id);
+    }
+    if (itemsInCart.includes(itemID)) {
+      return true;
+    }
+    return false;
+  }
+
+  const changeQuantity = (itemID) => {
+    for(const item of order_list.items) {
+      if (item.item_id === itemID) {
+        item.quantity ++;
+      }
+    }
+  }
+
+  const changeCart = (itemID) => {
+    console.log(order_list)
+    if (isInCart(itemID)) {
+      return changeQuantity(itemID);
+    } else {
+      return order_list.items.push({
+        item_id: itemID,
+        quantity: 1
+      });
+    }
+  }
+
   // Once client clicks on the add-to-cart button, the second parameter is there as it is dynamically rendered
   $(document).on("click", ".add-to-cart", function(event) {
     event.preventDefault();
-
+    
     $('.message-to-customer').hide();
 
     $.ajax('/api/add-to-cart', {
@@ -72,10 +103,7 @@ $(() => {
         totalWtTax += itemPrice;
         renderItems(itemName, 1, itemPrice);
         sumOrder(totalWtTax);
-        order_list.items.push({
-          item_id: itemID,
-          quantity: 1
-        });
+        changeCart(itemID)
       },
 
       error: (err) => {
