@@ -1,5 +1,4 @@
 $(() => {
-
   const addNewItem = (itemName, itemQuantity, itemPrice) => {
     const $selectedItem = $('<tr>').addClass('order-item');
     const $itemName = $('<td>').addClass('order-item-name').text(itemName);
@@ -171,5 +170,21 @@ $(() => {
         console.log(`Error details: ${err}`);
       }
     });
+
+    //AJAX request to /api/twilio
+    $.ajax('/api/twilio', {
+      method: 'POST',
+      dataType: 'JSON',
+      data: orderList,
+      success: (data) => {
+        console.log(data);
+      },
+
+      error: (err) => {
+        console.log(`Error details: ${err}`);
+      }
+    });
+
   });
+
 })
