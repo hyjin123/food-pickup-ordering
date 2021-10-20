@@ -75,10 +75,11 @@ $(() => {
   }
 
   // Currently, only increases quantity, but may hold option to decrease later
-  const changeQuantity = (itemId) => {
+  const updateItem = (itemId, itemPrice) => {
     for(const item of orderList.items) {
       if (item.item_id === itemId) {
         item.quantity ++;
+        item.price += itemPrice;
       }
     }
   }
@@ -86,7 +87,7 @@ $(() => {
   // Makes changes in the cart, for the .ajax post
   const changeCart = (itemId, itemName, itemPrice) => {
     if (isInCart(itemId)) {
-      return changeQuantity(itemId);
+      return updateItem(itemId, itemPrice);
     } else {
       return orderList.items.push({
         item_id: itemId,
@@ -100,7 +101,7 @@ $(() => {
   // Once client clicks on the add-to-cart button, the second parameter is there as it is dynamically rendered
   $(document).on("click", ".add-to-cart", function(event) {
     event.preventDefault();
-    
+
     $('.message-to-customer').hide();
 
     $.ajax('/api/add-to-cart', {
