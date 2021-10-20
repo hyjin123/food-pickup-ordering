@@ -14,6 +14,9 @@
   height: 4em;
   padding: 1em;
   background-color: lightgoldenrodyellow;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
 }
 
 .message-to-customer {
@@ -65,7 +68,13 @@
 }
 
 #tip {
-  width: 2em;
+  width: 3em;
   border: none;
   border-bottom: salmon solid;
+}
+
+#clear-cart {
+  background-color: lightsalmon;
+  display: flex;
+  align-items: center;
 }

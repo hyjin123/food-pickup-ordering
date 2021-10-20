@@ -10,11 +10,12 @@ express().use(cookieSession({
 module.exports = (db) => {
   router.post("/", (req, res) => {
 
-    let query = `INSERT INTO orders (customer_id, created_at, note)
-    VALUES ($1, now(), $2) RETURNING id ;`;
-    db.query(query, [req.session.userId, req.body.note])
+    let query = `INSERT INTO orders (customer_id, created_at, note, tip)
+    VALUES ($1, now(), $2, $3) RETURNING * ;`;
+    db.query(query, [req.session.userId, req.body.note, req.body.tip])
       .then(data => {
 
+        console.log('POST to orders: ',data.rows);
         const id = data.rows[0].id;
         const orderedList = req.body.items;
 
@@ -35,7 +36,7 @@ module.exports = (db) => {
 
         db.query(queryString, queryParams)
           .then(data => {
-            console.log(data.rows);
+            console.log('POST to order_items: ',data.rows);
             return data.rows;
           })
           .catch(err => {

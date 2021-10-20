@@ -1,4 +1,22 @@
 $(() => {
+  $('#clear-cart').hide();
+
+  const $itemContainer = $('#selected-items-container');
+  const $sumOrder = $('#sum-order');
+  let totalWtTax = 0;
+  const orderList = {
+    items: [],
+    note: '',
+    tip: 0
+  }; // object to store data of this customer's order
+  let tip = 0;
+
+  const emptyCart = () => {
+    orderList.items = [];
+    orderList.note = '';
+    orderList.tip = 0;
+  };
+
   const addNewItem = (itemName, itemQuantity, itemPrice) => {
     const $selectedItem = $('<tr>').addClass('order-item');
     const $itemName = $('<td>').addClass('order-item-name').text(itemName);
@@ -10,18 +28,15 @@ $(() => {
     return $selectedItem;
   };
 
-  const $itemContainer = $('#selected-items-container');
-  const $sumOrder = $('#sum-order');
-  let totalWtTax = 0;
-  const orderList = {
-    items: []
-  }; // object to store data of this customer's order
-  let tip = 0;
-
   const sumOrder = (total) => {
     const tax = Math.round(total * 13) / 100;
     tipAmount = Math.round(total * tip) / 100;
     $sumOrder.empty();
+
+    if (!$('#tip').val()) {
+      $('#tip').val(tip);
+      console.log('tip is: ',$('#tip').val());
+    }
 
     const $markup = `
       <tr class="order-item">
@@ -41,7 +56,7 @@ $(() => {
       </tr>
       <tr class="order-item">
       <td class="order-item-name">Tip</td>
-      <td class="order-quantity"><input id='tip' type='number' min='0' max='100' placeholder="%"></td>
+      <td class="order-quantity"><input id='tip' type='number' value='' min='0' max='100' placeholder="10">%</td>
       <td class="order-price" id='tip-amount'>${Number.parseFloat(tipAmount).toFixed(2)}</td>
       </tr>
       <tr class="order-item">
@@ -50,13 +65,12 @@ $(() => {
         <td class="order-price"><strong>${Math.round((total + tax + tipAmount) * 100) / 100}</strong></td>
         </tr>
       `
-      $sumOrder.append($markup);
-      orderList.tip = tipAmount;
-      console.log('Tip: ', orderList.tip);
-    return $sumOrder;
-  };
 
-  // Render all items using the obj as reference
+      $sumOrder.append($markup);
+      return $sumOrder;
+    };
+
+    // Render all items using the obj as reference
   const renderItems = () => {
     $itemContainer.empty();
     let $selectedItem;
@@ -111,6 +125,7 @@ $(() => {
     event.preventDefault();
 
     $('.message-to-customer').hide();
+    $('#clear-cart').show();
 
     $.ajax('/api/add-to-cart', {
       method: 'POST',
@@ -126,7 +141,6 @@ $(() => {
         sumOrder(totalWtTax);
         changeCart(itemId, itemName, itemPrice)
         renderItems();
-        console.log('tip: ', tip);
       },
 
       error: (err) => {
@@ -141,9 +155,20 @@ $(() => {
   });
 
   //Record customer input for tip
-  $(document).on('change', () => {
+  $(document).on('blur', '#tip', (event) => {
+    event.preventDefault();
+
     tip = $('#tip').val();
     sumOrder(totalWtTax);
+    orderList.tip = tipAmount;
+  });
+
+  $(document).on("click", "#clear-cart", function(event) {
+    event.preventDefault();
+    emptyCart();
+    $('#clear-cart').hide();
+    $itemContainer.empty();
+    $sumOrder.empty();
   });
 
   // Trigger order once customer click Order now
@@ -163,13 +188,14 @@ $(() => {
       data: orderList,
       success: (data) => {
         // console.log(data);
-        orderList.items = [];
       },
 
       error: (err) => {
         console.log(`Error details: ${err}`);
       }
     });
+
+    console.log('check empty cart 2: ',orderList);
 
     //AJAX request to /api/twilio
     $.ajax('/api/twilio', {
