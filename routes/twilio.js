@@ -1,6 +1,9 @@
 const express = require('express');
 const router  = express.Router();
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
+const { urlencoded } = require('body-parser');
+router.use(urlencoded({ extended: false }));
+
 // require('dotenv').config();
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
@@ -11,27 +14,44 @@ module.exports = (db) => {
 
   router.post("/", (req, res) => {
     const order = req.body.items;
+    console.log(order);
     let textMessage = "A customer has placed an order for ";
     for (const item of order) {
       textMessage += `${item.quantity} ${item.name}! `
     }
     console.log(textMessage);
 
-    client.messages
-    .create({
-       body: textMessage,
-       from: '+16137042914',
-       to: '+14372180544'
-     })
-     .then(message => console.log(message.sid));
+    // client.messages
+    // .create({
+    //    body: textMessage,
+    //    from: '+16137042914',
+    //    to: '+14372180544'
+    //  })
+    //  .then(message => console.log(message.sid));
 
     });
 
     router.post('/sms', (req, res) => {
       const twiml = new MessagingResponse();
+      // access the message body and the number it was sent from
+      console.log(`Incoming message from ${req.body.From}: ${req.body.Body}`);
+      const estimatedTimeMessage = req.body.Body;
 
-      twiml.message('Thank you for the estimated time!');
+      // this will send a message to the client once the owner responds with time
+      const clientMessage = `Your order will be ready in ${estimatedTimeMessage} minutes!`;
+      client.messages
+      .create({
+        body: clientMessage,
+        from: '+16137042914',
+        to: '+14372180544'
+       })
+       .then(message => console.log(message.sid));
 
+      // this will reply to the owner saying thank you!
+      const message = `
+      Thank you! We will let the customer know that it will take ${estimatedTimeMessage} minutes for the food to get ready.
+      `;
+      twiml.message(message);
       res.writeHead(200, {'Content-Type': 'text/xml'});
       res.end(twiml.toString());
     });
