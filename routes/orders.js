@@ -11,7 +11,7 @@ module.exports = (db) => {
   router.post("/", (req, res) => {
 
     let query = `INSERT INTO orders (customer_id, created_at, note)
-    VALUES ($1, now()::date, $2) RETURNING id ;`;
+    VALUES ($1, now(), $2) RETURNING id ;`;
     db.query(query, [req.session.userId, req.body.note])
       .then(data => {
 
