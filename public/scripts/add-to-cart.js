@@ -1,5 +1,4 @@
 $(() => {
-
   const addNewItem = (itemName, itemQuantity, itemPrice) => {
     const $selectedItem = $('<tr>').addClass('order-item');
     const $itemName = $('<td>').addClass('order-item-name').text(itemName);
@@ -100,7 +99,7 @@ $(() => {
   // Once client clicks on the add-to-cart button, the second parameter is there as it is dynamically rendered
   $(document).on("click", ".add-to-cart", function(event) {
     event.preventDefault();
-    
+
     $('.message-to-customer').hide();
 
     $.ajax('/api/add-to-cart', {
@@ -153,6 +152,22 @@ $(() => {
         console.log(`Error details: ${err}`);
       }
     });
+
+    //AJAX request to /api/twilio
+    $.ajax('/api/twilio', {
+      method: 'POST',
+      dataType: 'JSON',
+      data: orderList,
+      success: (data) => {
+        console.log(data);
+      },
+
+      error: (err) => {
+        console.log(`Error details: ${err}`);
+      }
+    });
+
   });
+
 })
 
