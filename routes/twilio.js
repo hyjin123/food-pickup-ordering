@@ -17,20 +17,20 @@ module.exports = (db) => {
     }
     console.log(textMessage);
 
-    // client.messages
-    // .create({
-    //    body: textMessage,
-    //    from: '+16137042914',
-    //    to: '+14372180544'
-    //  })
-    //  .then(message => console.log(message.sid));
+    client.messages
+    .create({
+       body: textMessage,
+       from: '+16137042914',
+       to: '+14372180544'
+     })
+     .then(message => console.log(message.sid));
 
     });
 
     router.post('/sms', (req, res) => {
       const twiml = new MessagingResponse();
 
-      twiml.message('I have received your message!');
+      twiml.message('Thank you for the estimated time!');
 
       res.writeHead(200, {'Content-Type': 'text/xml'});
       res.end(twiml.toString());
@@ -38,3 +38,7 @@ module.exports = (db) => {
 
   return router;
 }
+
+// twilio phone-numbers:update "+16137042914" --sms-url="http://localhost:1337/sms"
+// twilio phone-numbers:update "+16137042914" --sms-url="http://localhost:8080/api/twilio/sms"
+// https://04d5-135-12-178-128.ngrok.io/api/twilio/sms
