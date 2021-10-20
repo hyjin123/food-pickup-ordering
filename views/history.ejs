@@ -74,63 +74,33 @@
     </ul>
   </nav>
 
-  <!-- dropdown example -->
-  <!-- <li class="nav-item dropdown">
-      <a class="nav-link  dropdown-toggle" href="#" data-bs-toggle="dropdown">My Orders</a>
-      <ul class="dropdown-menu">
-        <% for(let order in orders) { %>
-          <li><a class="dropdown-item" href="#"><%= orders[order].date.toDateString() %></a></li>
-          <% } %>
-        </ul>
-      </li> -->
-
   <!-- main container of the page -->
   <main id="main-container">
 
-<!--     <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">Date</th>
-          <th scope="col">Buy Again</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% for(let order in orders) { %>
-          <tr>
-            <td><%= orders[order].date.toDateString() %></td>
-            <td><%= orders[order].buyAgain %></td>
-          </tr>
-          <% } %>
-      </tbody>
-    </table> -->
-
-    <table class="table table-hover" style="text-align: center;">
-      <thead>
-        <tr>
-          <th scope="col">Order</th>
-          <th scope="col">Date</th>
-          <th scope="col">Item</th>
-          <th scope="col">Quantity</th>
-          <th scope="col">Price</th>
-          <th scope="col">Buy Again</th>
-          <th scope="col">Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% for(let order of fullHistory) { %>
-          <tr>
-            <td><%= order.order_id %></td>
-            <td><%= order.date.toDateString() %></td>
-            <td><%= order.item_name %></td>
-            <td><%= order.quantity %></td>
-            <td><%= Number.parseFloat(order.price).toFixed(2) %></td>
-            <td><%= Number.parseFloat(orders['orderId-'+order.order_id].buyAgain).toFixed(2) %></td>
-            <td><%= orders['orderId-'+order.order_id].status %></td>
-          </tr>
-          <% } %>
-      </tbody>
-    </table>
-
+    <ul class="container">
+      <% for(let order in orders) { %>
+        <div class="list-group">
+          <li class="list-group-item history-title"><%= `${orders[order].date.toDateString()} --- ${orders[order].status} `%></li>
+          <li class="list-group-item">
+            <table class="table table-sm table-borderless" style="text-align: center;">
+              <tbody>
+                <% for(const item of orders[order].contents) { %>
+                  <tr>
+                    <td><%= item %></td>
+                  </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </li>
+          <li class="list-group-item history-title"> <%= `${orders[order].noteInOrder}` %></li>
+<!--           <a href="#" 
+          id="order_again" 
+          class="list-group-item list-group-item-action" 
+          style="text-align: right;">Order Again for $ <%= Number.parseFloat(orders[order].buyAgain).toFixed(2) %></a> -->
+        </div>
+        <br>
+        <% } %>
+    </ul>
 
   </main>
 
