@@ -200,7 +200,7 @@ $(() => {
       dataType: 'JSON',
       data: orderList,
       success: (data) => {
-        console.log(data);
+        console.log("this is the minute:", data);
       },
 
       error: (err) => {
