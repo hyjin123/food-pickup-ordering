@@ -35,7 +35,6 @@ module.exports = (db) => {
       const orders = {};
       for(let order of fullHistory) {
         let orderId = 'orderId-' + order.order_id;
-        console.log(orderId);
         if (!orders[orderId]) {
           orders[orderId] = {
             customerId: order.customer_id,

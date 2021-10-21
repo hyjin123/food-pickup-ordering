@@ -15,40 +15,36 @@ module.exports = (db) => {
   // POST Route for when the customer clicks on the "Order Now" button
   router.post("/", (req, res) => {
     const order = req.body.items;
-    console.log(order);
     let textMessage = "A customer has placed an order for ";
     for (const item of order) {
       textMessage += `${item.quantity} ${item.name}! `
     }
     console.log(textMessage);
 
-    // client.messages
-    // .create({
-    //    body: textMessage,
-    //    from: '+16137042914',
-    //    to: '+14372180544'
-    //  })
-    //  .then(message => console.log(message.sid));
+    client.messages
+    .create({
+       body: textMessage,
+       from: '+16137042914',
+       to: '+14372180544'
+     })
+     .then(message => console.log(message.sid));
 
     });
 
     // POST Route for when the restaurant owner specifies how long the order will take
     router.post("/prep-time", (req, res) => {
-    // const order = req.body.items;
-    // console.log(order);
-    // let textMessage = "A customer has placed an order for ";
-    // for (const item of order) {
-    //   textMessage += `${item.quantity} ${item.name}! `
-    // }
-    // console.log(textMessage);
+      console.log(req.body);
+      const phoneNumber = req.body.customerPhone;
+      const prepTime = req.body.minutes;
+      const textMessage = `Thank you for your order! you can pick up your food in ${prepTime} minutes`;
 
-    // client.messages
-    // .create({
-    //    body: textMessage,
-    //    from: '+16137042914',
-    //    to: '+14372180544'
-    //  })
-    //  .then(message => console.log(message.sid));
+      client.messages
+      .create({
+        body: textMessage,
+        from: '+16137042914',
+        to: phoneNumber
+      })
+      .then(message => console.log(message.sid));
 
     });
 
