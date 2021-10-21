@@ -15,22 +15,43 @@ module.exports = (db) => {
   // POST Route for when the customer clicks on the "Order Now" button
   router.post("/", (req, res) => {
     const order = req.body.items;
-    // const user = req.session.userId;
-    // console.log("this is the user:", user);
-    let textMessage = "A customer has placed an order for ";
-    for (const item of order) {
-      textMessage += `${item.quantity} ${item.name}! `
-    }
-    console.log(textMessage);
+    let textMessageToOwner = "A customer has placed an order for ";
+    let textMessageToCustomer = "Thank you! You have placed an order for ";
 
+    for (const item of order) {
+      textMessageToOwner += `${item.quantity} ${item.name}! `
+      textMessageToCustomer += `${item.quantity} ${item.name}! `
+    };
+    // send message to the owner when order is placed
     client.messages
     .create({
-       body: textMessage,
+       body: textMessageToOwner,
        from: '+16137042914',
        to: '+14372180544'
      })
      .then(message => console.log(message.sid));
 
+    // send message to the customer when order is placed
+    const user = req.session.userId;
+    let query = `
+      SELECT phone_number
+      FROM customers
+      WHERE customers.id = $1
+    `;
+    db.query(query, [user])
+    .then(data => {
+      const customerPhoneNumber = data.rows[0].phone_number;
+      client.messages
+      .create({
+         body: textMessageToCustomer,
+         from: '+16137042914',
+         to: customerPhoneNumber
+       })
+       .then(message => console.log(message.sid));
+    })
+    .catch(err => {
+      res.status(500).json({ error: err.message });
+     });
   });
 
   // POST Route for when the restaurant owner specifies how long the order will take
@@ -69,17 +90,29 @@ module.exports = (db) => {
 
     const textMessage = `Food is ready!!`;
 
-    client.messages
-    .create({
-       body: textMessage,
-       from: '+16137042914',
-       to: '+14372180544'
-     })
-     .then(message => {
-        console.log(message);
-      });
+    // send message to the customer when order is ready
+    const user = req.session.userId;
+    let query = `
+      SELECT phone_number
+      FROM customers
+      WHERE customers.id = $1
+    `;
+    db.query(query, [user])
+    .then(data => {
+      const customerPhoneNumber = data.rows[0].phone_number;
+      client.messages
+      .create({
+         body: textMessage,
+         from: '+16137042914',
+         to: customerPhoneNumber
+       })
+       .then(message => console.log(message.sid));
+    })
+    .catch(err => {
+      res.status(500).json({ error: err.message });
+     });
 
-    });
+  });
 
     // router.post('/sms', (req, res) => {
     //   const twiml = new MessagingResponse();
