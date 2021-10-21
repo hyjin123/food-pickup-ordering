@@ -13,11 +13,20 @@ nav {
   z-index: 1;
   top: 0;
 }
+.logo-container{
+  width: 30vw;
+  height: 10vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 1.8em;
+  color: #3565B0;
+
+}
 
 #logo {
-  width: 30%;
-  font-size: 2em;
-  color: #3565B0;
+  width: 3em;
+  height: 3em;
 }
 
 nav a {
@@ -40,6 +49,7 @@ nav a:hover {
 }
 
 .customer-greeting{
+  width: max-content;
   display: flex;
   flex-direction: row;
   font-size: 1.2em;
@@ -79,8 +89,4 @@ nav a:hover {
 }
 .dropdown-menu{
   margin-top:0;
-}
-
-#logo_img {
-  width: 10%;
 }

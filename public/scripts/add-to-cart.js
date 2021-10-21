@@ -77,7 +77,7 @@ $(() => {
     let $selectedItem;
     for (const item of orderList.items) {
       $selectedItem = addNewItem(item.name, item.quantity, item.price);
-      $itemContainer.prepend($selectedItem);
+      $itemContainer.append($selectedItem);
     }
   };
   // Call function to ensure that when there's content in the obj
