@@ -52,7 +52,7 @@ module.exports = (db) => {
         `;
         db.query(query, [prepTime, orderId])
         .then(data => {
-          return data.rows;
+          res.redirect('/../../backstore');
         })
         .catch(err => {
           res
