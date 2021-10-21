@@ -32,8 +32,13 @@ module.exports = (db) => {
 
   // Route to POST registration: will add user in DB and put the cookie.
   router.post('/register', (req, res) => {
-    const { name, email, phone_number, address, city, province, postal_code } = req.body;
+    const { name, email, address, city, province, postal_code } = req.body;
     const password = bcrypt.hashSync(req.body.password, 10);
+    
+    // Transforms phone-number in +19876543210 format
+    let phone_number = req.body.phone_number.match(/\d+/g).join('');
+    phone_number.slice(0,1) === '1'? phone_number = '+'+phone_number : phone_number = '+1'+phone_number ;
+
     userContents = [name, email, phone_number, password, address, city, province, postal_code]
     db.query(`INSERT INTO customers (name, email, phone_number, password, address, city, province, postal_code)
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id ;`, userContents)
