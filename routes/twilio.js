@@ -32,11 +32,10 @@ module.exports = (db) => {
     });
 
     // POST Route for when the restaurant owner specifies how long the order will take
-    router.post("/prep-time", (req, res) => {
-      console.log(req.body);
+    router.post("/prep-time-alert", (req, res) => {
       const phoneNumber = req.body.customerPhone;
       const prepTime = req.body.minutes;
-      const textMessage = `Thank you for your order! you can pick up your food in ${prepTime} minutes`;
+      const textMessage = `Thank you for your order! you can pick up your food in ${prepTime} minutes!`;
 
       client.messages
       .create({
@@ -44,27 +43,27 @@ module.exports = (db) => {
         from: '+16137042914',
         to: phoneNumber
       })
-      .then(message => console.log(message.sid));
+      .then(message => {
+        //send the prep time data back so that we can use it to update the EJS
+        res.send(prepTime);
+      });
 
     });
 
-    // POST Route for when the restaurant owner clicks on the Finished button
-    router.post("/finished", (req, res) => {
-    // const order = req.body.items;
-    // console.log(order);
-    // let textMessage = "A customer has placed an order for ";
-    // for (const item of order) {
-    //   textMessage += `${item.quantity} ${item.name}! `
-    // }
-    // console.log(textMessage);
+    // POST Route for when the restaurant owner clicks on the Finished button and customer gets the final text
+    router.post("/pick-up-alert", (req, res) => {
 
-    // client.messages
-    // .create({
-    //    body: textMessage,
-    //    from: '+16137042914',
-    //    to: '+14372180544'
-    //  })
-    //  .then(message => console.log(message.sid));
+    const textMessage = `Food is ready!!`;
+
+    client.messages
+    .create({
+       body: textMessage,
+       from: '+16137042914',
+       to: '+14372180544'
+     })
+     .then(message => {
+        console.log(message);
+      });
 
     });
 
