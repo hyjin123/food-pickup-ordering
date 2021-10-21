@@ -83,9 +83,6 @@
           </li>
           <li class="list-group-item" style="text-align: left;">Send Message to <%= orders[order].customerName %>
               <form class="prep-info" method="POST" action="/api/twilio/prep-time">
-                <label>orderID</label>
-                <input class="form-control form-control-plaintext" name="orderID"
-                  value="<%= `${orders[order].orderId}` %> " style="width: 300px">
                 <label>Tel.:</label>
                 <input class="form-control" name="customerPhone" value="<%= `${orders[order].customerPhone}` %> "
                   style="width: 300px">

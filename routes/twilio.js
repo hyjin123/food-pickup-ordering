@@ -56,9 +56,9 @@ module.exports = (db) => {
 
   // POST Route for when the restaurant owner specifies how long the order will take
   router.post("/prep-time-alert", (req, res) => {
-    const phoneNumber = req.body.customerPhone;
-    const prepTime = req.body.minutes;
-    const orderId = req.body.orderID;
+    const phoneNumber = req.body.value[0].value;
+    const prepTime = req.body.value[1].value;
+    const orderId = req.body.orderId;
     const textMessage = `Thank you for your order! you can pick up your food in ${prepTime} minutes!`;
 
     client.messages
@@ -75,7 +75,7 @@ module.exports = (db) => {
       `;
       db.query(query, [prepTime, orderId])
       .then(data => {
-        res.redirect('/../../backstore');
+        console.log("hello");
       })
       .catch(err => {
         res
