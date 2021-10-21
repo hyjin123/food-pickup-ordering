@@ -130,7 +130,7 @@ module.exports = (db) => {
 
       let queryDB = `
         UPDATE orders
-        SET prep_time = 0, updated_at = now()
+        SET prep_time = now(), updated_at = now()
         WHERE orders.id = $1;
         `;
       db.query(queryDB, [req.body.orderId])
