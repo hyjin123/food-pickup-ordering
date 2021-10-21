@@ -66,13 +66,8 @@ module.exports = (db) => {
   router.post("/prep-time-alert", (req, res) => {
     const phoneNumber = req.body.value[0].value;
     const minutes = req.body.value[1].value;
-    console.log(typeof minutes);
-    debugger
     const timeNow = parseInt(req.body.timeNow);
-    console.log("time now is", timeNow)
-    console.log("time", new Date(timeNow + minutes * 60000))
     const prepTime = new Date(timeNow + minutes * 60000).toJSON().replace("T", " ").replace("Z", "");
-    console.log("preptime is", prepTime);
     const orderId = req.body.orderId;
     const textMessage = `Your order will be ready for pickup in ${minutes} minutes! Thank you for your patience.`;
 
