@@ -1,6 +1,8 @@
 $(() => {
 
   $(".prep-info").submit(function(event) {
+    const orderId = $(this).parents().siblings(".orderID");
+    console.log("this is the orderID", orderId.val());
     event.preventDefault();
     const value = $(this).serialize();
     $.ajax('/api/twilio/prep-time-alert', {
