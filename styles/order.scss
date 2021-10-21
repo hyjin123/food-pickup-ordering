@@ -7,7 +7,7 @@
   bottom: 0;
   display: flex;
   flex-direction: column;
-  align-content: stretch;
+  // align-content: stretch;
 }
 
 .order-header {
@@ -25,8 +25,15 @@
   margin-top: 5em;
 }
 
+.item-list {
+  width: 94%;
+  height: 32em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .order-table {
-  width: 98%;
   table-layout: fixed;
   margin: 0.2em;
 }
@@ -52,20 +59,20 @@
   bottom: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: flex-end;
 }
 
 .customer-note {
   width: 30vw;
-  padding: 1em;
+  padding: 0.5em;
   bottom: 5em;
 }
 
 .order-button {
-  margin: 0.5em 0;
-  position: fixed;
+  margin: 0.5em;
+  // position: fixed;
   bottom: 0;
-  right: 1em;
+  margin-left: auto;
 }
 
 .tip {
@@ -82,4 +89,9 @@
   background-color: lightsalmon;
   display: flex;
   align-items: center;
+}
+
+#order-now{
+  display: flex;
+  justify-content: center;
 }

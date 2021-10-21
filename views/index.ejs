@@ -101,17 +101,20 @@
       </header>
 
       <form id="order-now" action="/api/orders" method="POST">
-        <table class="order-table">
-          <thead>
-            <tr>
-              <th scope="col" class="order-item-name">Item</th>
-              <th scope="col" class="order-quantity">qty</th>
-              <th scope="col" class="order-price">price</th>
-            </tr>
-          </thead>
-          <tbody id="selected-items-container"></tbody>
-          <tfoot id="sum-order"></tfoot>
-        </table>
+        <section class="item-list">
+          <table class="order-table">
+            <thead>
+              <tr>
+                <th scope="col" class="order-item-name">Item</th>
+                <th scope="col" class="order-quantity">qty</th>
+                <th scope="col" class="order-price">price</th>
+              </tr>
+            </thead>
+            <tbody id="selected-items-container"></tbody>
+            <!-- <tfoot id="sum-order"></tfoot> -->
+          </table>
+          <table class="order-table" id="sum-order"></table>
+        </section>
 
         <p class='message-to-customer' type='text'></p>
 
@@ -119,7 +122,10 @@
           <label class="tip">Tip: <input id='tip' type='number' min='0' max='100' placeholder="0" oninput="validity.valid||(value='');">%</label>
           <section class="customer-note">
             <label for="note">Any extra request?</label>
-            <input class="form-control" id='customer-note' type='text' placeholder="e.g. less sugar, no ice, etc.">
+            <div class='input-group'>
+              <textarea class="form-control" id='customer-note' type='text' placeholder="e.g. less sugar, no ice, etc."></textarea>
+              <!-- <input class="form-control" id='customer-note' type='text' placeholder="e.g. less sugar, no ice, etc."> -->
+            </div>
           </section>
 
           <div class="order-button">

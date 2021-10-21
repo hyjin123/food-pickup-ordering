@@ -157,7 +157,7 @@ $(() => {
   });
 
   //Record customer input tip
-  $(document).on('blur', '#tip', (event) => {
+  $(document).on('change', '#tip', (event) => {
     event.preventDefault();
     tip = $('#tip').val();
     refreshSumOrder(totalWtTax);
@@ -208,7 +208,6 @@ $(() => {
       }
     });
     emptyCart();
-    console.log('check empty cart 2: ',orderList.items);
   });
 
 })
