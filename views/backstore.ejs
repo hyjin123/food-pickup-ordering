@@ -104,7 +104,7 @@
                 <button type="submit" class="btn btn-primary">Send Prep Time!</button>
               </form>
               <form class="pick-up-alert" method="POST" action="/api/twilio/pick-up-alert">
-                <button id="finished" name="finished" value="finished" type="submit"
+                <button id="finished" name="finished" value="<%= orders[order].orderId %>" type="submit"
                   class="btn btn-primary">Finished!</button>
               </form>
           </li>

@@ -96,31 +96,47 @@ module.exports = (db) => {
     // POST Route for when the restaurant owner clicks on the Finished button and customer gets the final text
     router.post("/pick-up-alert", (req, res) => {
 
-    const textMessage = 'Your order is ready for pickup!';
+      const textMessage = 'Your order is ready for pickup!';
 
-    // send message to the customer when order is ready
-    const user = req.session.userId;
-    let query = `
-      SELECT phone_number
-      FROM customers
-      WHERE customers.id = $1
-    `;
-    db.query(query, [user])
-    .then(data => {
-      const customerPhoneNumber = data.rows[0].phone_number;
-      client.messages
-      .create({
-         body: textMessage,
-         from: '+16137042914',
-         to: customerPhoneNumber
-       })
-       .then(message => console.log(message.sid));
-    })
-    .catch(err => {
-      res.status(500).json({ error: err.message });
-     });
+      // send message to the customer when order is ready
+      const user = req.session.userId;
+      let query = `
+        SELECT phone_number
+        FROM customers
+        WHERE customers.id = $1
+      `;
+      db.query(query, [user])
+      .then(data => {
+        const customerPhoneNumber = data.rows[0].phone_number;
+        client.messages
+        .create({
+           body: textMessage,
+           from: '+16137042914',
+           to: customerPhoneNumber
+         })
+         .then(message => {
+        });
+      })
+      .catch(err => {
+        res.status(500).json({ error: err.message });
+       });
 
-  });
+      let queryDB = `
+        UPDATE orders
+        SET prep_time = 0, updated_at = now()
+        WHERE orders.id = $1;
+        `;
+      db.query(queryDB, [req.body.orderId])
+      .then(data => {
+        console.log(data);
+      })
+     .catch(err => {
+       res
+        .status(500)
+         .json({ error: err.message });
+       });
+
+    });
 
     // router.post('/sms', (req, res) => {
     //   const twiml = new MessagingResponse();
