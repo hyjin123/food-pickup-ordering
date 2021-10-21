@@ -16,6 +16,12 @@ express().use(cookieSession({
 module.exports = (db) => {
 
   router.get("/", (req, res) => {
+
+    const isLoggedIn = req.session.userId;
+    console.log(isLoggedIn)
+    const templateVars = { userId: isLoggedIn }
+    !isLoggedIn ? res.render('login') : ( isLoggedIn !== 1 ? res.render('./index.ejs', templateVars) : null) 
+
     const query = `
     SELECT order_id, created_at as date, prep_time, menu_items.name AS item_name, price, quantity, note,
     customer_id, customers.name as customer_name, customers.phone_number as customer_phone
@@ -53,7 +59,6 @@ module.exports = (db) => {
           }
         }
         const templateVars = { orders };
-        console.log(templateVars)
         res.render("../views/backstore.ejs", templateVars)
       })
       .catch(err => {
