@@ -16,7 +16,7 @@ CREATE TABLE orders (
   customer_id INTEGER REFERENCES customers(id) ON DELETE CASCADE,
   created_at TIMESTAMP DEFAULT Now(),
   updated_at TIMESTAMP DEFAULT Now(),
-  prep_time INTEGER DEFAULT 40,
+  prep_time TIMESTAMP DEFAULT Now() + time '00:40',
   note TEXT,
   tip REAL DEFAULT 0
 );

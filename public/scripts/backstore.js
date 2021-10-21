@@ -6,15 +6,17 @@ $(() => {
 
     event.preventDefault();
     const value = $(this).serializeArray();
+    const timeNow = new Date();
     $.ajax('/api/twilio/prep-time-alert', {
       method: 'POST',
       dataType: 'TEXT',
       data: {
         value,
-        orderId
+        orderId,
+        timeNow: timeNow.getTime()
       },
       success: (data) => {
-        console.log("this is prep data:", data);
+
       },
 
       error: (err) => {

@@ -42,6 +42,7 @@ module.exports = (db) => {
       for(let order of fullHistory) {
         let orderId = 'orderId-' + order.order_id;
         if (!orders[orderId]) {
+          let minutes = Math.round((order.prep_time - new Date())/ 1000 / 60)
           orders[orderId] = {
             customerId: order.customer_id,
             customerName: order.customer_name,
@@ -51,7 +52,7 @@ module.exports = (db) => {
             contents: [`${[order.item_name]} x ${[order.quantity]}`],
             buyAgain: order.price * order.quantity,
             noteInOrder: `Order note: ${order.note}` || 'No note added in this order.',
-            status: addMinutes(order.date, order.prep_time) < Date.now()? 'Completed' : `In progress. Will be ready in ${Math.round((addMinutes(order.date, order.prep_time)-Date.now())/60000)} minutes.`
+            status: minutes > 0 ? `${minutes} minutes`: `Completed`
             };
           } else {
             orders[orderId].contents.push(`${[order.item_name]} x ${[order.quantity]}`);

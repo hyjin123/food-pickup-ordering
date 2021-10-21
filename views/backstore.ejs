@@ -30,8 +30,6 @@
   <link rel="stylesheet" href="/styles/order.css" type="text/css" />
   <link rel="stylesheet" href="/styles/login.css" type="text/css" />
   <link rel="stylesheet" href="/styles/register.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/history.css" type="text/css" />
-
   <!-- App JS -->
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
@@ -73,7 +71,7 @@
           <li class="list-group-item history-title orderID" value="<%= orders[order].orderId %>">
             <%= `Order ID: ${orders[order].orderId} --- At: ${orders[order].date.toDateString()} `%>
           </li>
-          <li class="list-group-item history-title">
+          <li class="list-group-item history-title order-status">
             <%= `Status: ${orders[order].status} `%>
           </li>
           <li class="list-group-item">
