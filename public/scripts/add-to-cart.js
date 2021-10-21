@@ -1,5 +1,6 @@
 $(() => {
   $('#clear-cart').hide();
+  $('.tip').hide();
 
   const $itemContainer = $('#selected-items-container');
   const $sumOrder = $('#sum-order');
@@ -15,6 +16,12 @@ $(() => {
     orderList.items = [];
     orderList.note = '';
     orderList.tip = 0;
+    totalWtTax = 0;
+    tip = 0;
+    $('#clear-cart').hide();
+    $('.tip').hide();
+    $('#tip').val('');
+    $('#customer-note').val('')
   };
 
   const addNewItem = (itemName, itemQuantity, itemPrice) => {
@@ -28,15 +35,10 @@ $(() => {
     return $selectedItem;
   };
 
-  const sumOrder = (total) => {
+  const refreshSumOrder = (total) => {
     const tax = Math.round(total * 13) / 100;
     tipAmount = Math.round(total * tip) / 100;
     $sumOrder.empty();
-
-    if (!$('#tip').val()) {
-      $('#tip').val(tip);
-      console.log('tip is: ',$('#tip').val());
-    }
 
     const $markup = `
       <tr class="order-item">
@@ -56,7 +58,7 @@ $(() => {
       </tr>
       <tr class="order-item">
       <td class="order-item-name">Tip</td>
-      <td class="order-quantity"><input id='tip' type='number' value='' min='0' max='100' placeholder="10">%</td>
+      <td class="order-quantity"></td>
       <td class="order-price" id='tip-amount'>${Number.parseFloat(tipAmount).toFixed(2)}</td>
       </tr>
       <tr class="order-item">
@@ -65,10 +67,9 @@ $(() => {
         <td class="order-price"><strong>${Math.round((total + tax + tipAmount) * 100) / 100}</strong></td>
         </tr>
       `
-
-      $sumOrder.append($markup);
-      return $sumOrder;
-    };
+    $sumOrder.append($markup);
+    return $sumOrder;
+  };
 
     // Render all items using the obj as reference
   const renderItems = () => {
@@ -126,6 +127,7 @@ $(() => {
 
     $('.message-to-customer').hide();
     $('#clear-cart').show();
+    $('.tip').show();
 
     $.ajax('/api/add-to-cart', {
       method: 'POST',
@@ -138,7 +140,7 @@ $(() => {
         const itemName = data.item[0].name;
         const itemPrice = data.item[0].price;
         totalWtTax += itemPrice;
-        sumOrder(totalWtTax);
+        refreshSumOrder(totalWtTax);
         changeCart(itemId, itemName, itemPrice)
         renderItems();
       },
@@ -154,21 +156,19 @@ $(() => {
     orderList.note = $('#customer-note').val();
   });
 
-  //Record customer input for tip
+  //Record customer input tip
   $(document).on('blur', '#tip', (event) => {
     event.preventDefault();
-
     tip = $('#tip').val();
-    sumOrder(totalWtTax);
+    refreshSumOrder(totalWtTax);
     orderList.tip = tipAmount;
   });
 
   $(document).on("click", "#clear-cart", function(event) {
     event.preventDefault();
-    emptyCart();
-    $('#clear-cart').hide();
     $itemContainer.empty();
     $sumOrder.empty();
+    emptyCart();
   });
 
   // Trigger order once customer click Order now
@@ -187,15 +187,12 @@ $(() => {
       dataType: 'JSON',
       data: orderList,
       success: (data) => {
-        // console.log(data);
+        console.log(data);
       },
-
       error: (err) => {
         console.log(`Error details: ${err}`);
       }
     });
-
-    console.log('check empty cart 2: ',orderList);
 
     //AJAX request to /api/twilio
     $.ajax('/api/twilio', {
@@ -210,7 +207,8 @@ $(() => {
         console.log(`Error details: ${err}`);
       }
     });
-
+    emptyCart();
+    console.log('check empty cart 2: ',orderList.items);
   });
 
 })
