@@ -58,7 +58,8 @@
     <ul class="container">
       <% for(let order in orders) { %>
         <div class="list-group">
-          <li class="list-group-item history-title"><%= `Order ID: ${orders[order].orderId} --- At: ${orders[order].date.toDateString()} --- Status: ${orders[order].status} `%></li>
+          <li class="list-group-item history-title"><%= `Order ID: ${orders[order].orderId} --- At: ${orders[order].date.toDateString()} `%></li>
+          <li class="list-group-item history-title"><%= `Status: ${orders[order].status} `%></li>
           <li class="list-group-item">
             <table class="table table-sm table-borderless" style="text-align: center;">
               <tbody>
@@ -72,14 +73,18 @@
           </li>
           <li class="list-group-item history-title"> <%= `${orders[order].noteInOrder}` %></li>
            <li class="list-group-item" style="text-align: left;">Send Message to <%= orders[order].customerName %>
-            <label>Tel.:</label>
-            <input class="form-control" name="customerPhone" value="<%= `${orders[order].customerPhone}` %> " style="width: 300px">
-          <form method="POST" action="/api/twilio">
-            <label for="prep-time">Type prep time in minutes:</label>
-            <input class="form-control" id="prep-time" name="msgToCustomer" style="width: 600px">
-            <button id="prep-time" type="submit" name="prep-time" value="hello" class="btn btn-primary">Send Prep Time!</button>
-          </form>
-            <button id="finished" type="submit" class="btn btn-primary">Finished!</button>
+            <form class="prep-info" method="POST" action="/api/twilio/prep-time">
+              <label>orderID</label>
+              <input class="form-control" name="orderID" value="<%= `${orders[order].orderId}` %> " style="width: 300px">
+              <label>Tel.:</label>
+              <input class="form-control" name="customerPhone" value="<%= `${orders[order].customerPhone}` %> " style="width: 300px">
+              <label for="<%= `${orders[order].orderId}` %>">Type prep time in minutes:</label>
+              <input type="text" class="form-control prep-time" id="<%= `${orders[order].orderId}` %>" name="minutes" style="width: 600px">
+              <button type="submit" class="btn btn-primary">Send Prep Time!</button>
+            </form>
+            <form class="pick-up-alert" method="POST" action="/api/twilio/pick-up-alert">
+              <button id="finished" name="finished" value="finished" type="submit" class="btn btn-primary">Finished!</button>
+            </form>
           </li>
         </div>
         <br>

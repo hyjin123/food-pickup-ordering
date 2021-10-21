@@ -15,63 +15,69 @@ module.exports = (db) => {
   // POST Route for when the customer clicks on the "Order Now" button
   router.post("/", (req, res) => {
     const order = req.body.items;
-    console.log(order);
     let textMessage = "A customer has placed an order for ";
     for (const item of order) {
       textMessage += `${item.quantity} ${item.name}! `
     }
     console.log(textMessage);
 
-    // client.messages
-    // .create({
-    //    body: textMessage,
-    //    from: '+16137042914',
-    //    to: '+14372180544'
-    //  })
-    //  .then(message => console.log(message.sid));
+    client.messages
+    .create({
+       body: textMessage,
+       from: '+16137042914',
+       to: '+14372180544'
+     })
+     .then(message => console.log(message.sid));
 
     });
 
     // POST Route for when the restaurant owner specifies how long the order will take
-    router.post("/prep-time", (req, res) => {
-    // const order = req.body.items;
-    // console.log(order);
-    // let textMessage = "A customer has placed an order for ";
-    // for (const item of order) {
-    //   textMessage += `${item.quantity} ${item.name}! `
-    // }
-    // console.log(textMessage);
+    router.post("/prep-time-alert", (req, res) => {
+      const phoneNumber = req.body.customerPhone;
+      const prepTime = req.body.minutes;
+      const orderId = req.body.orderID;
+      const textMessage = `Thank you for your order! you can pick up your food in ${prepTime} minutes!`;
 
-    // client.messages
-    // .create({
-    //    body: textMessage,
-    //    from: '+16137042914',
-    //    to: '+14372180544'
-    //  })
-    //  .then(message => console.log(message.sid));
-
+      client.messages
+      .create({
+        body: textMessage,
+        from: '+16137042914',
+        to: phoneNumber
+      })
+      .then(message => {
+        let query = `
+         UPDATE orders
+         SET prep_time = $1
+         WHERE orders.id = $2
+        `;
+        db.query(query, [prepTime, orderId])
+        .then(data => {
+          res.redirect('/../../backstore');
+        })
+        .catch(err => {
+          res
+            .status(500)
+            .json({ error: err.message });
+        });
+      });
     });
 
-    // POST Route for when the restaurant owner clicks on the Finished button
-    router.post("/finished", (req, res) => {
-    // const order = req.body.items;
-    // console.log(order);
-    // let textMessage = "A customer has placed an order for ";
-    // for (const item of order) {
-    //   textMessage += `${item.quantity} ${item.name}! `
-    // }
-    // console.log(textMessage);
+    // POST Route for when the restaurant owner clicks on the Finished button and customer gets the final text
+    router.post("/pick-up-alert", (req, res) => {
 
-    // client.messages
-    // .create({
-    //    body: textMessage,
-    //    from: '+16137042914',
-    //    to: '+14372180544'
-    //  })
-    //  .then(message => console.log(message.sid));
+    const textMessage = `Food is ready!!`;
+
+    client.messages
+    .create({
+       body: textMessage,
+       from: '+16137042914',
+       to: '+14372180544'
+     })
+     .then(message => {
+        console.log(message);
+      });
 
     });
-
 
     // router.post('/sms', (req, res) => {
     //   const twiml = new MessagingResponse();
