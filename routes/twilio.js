@@ -31,20 +31,6 @@ module.exports = (db) => {
      })
      .then(message => console.log(message.sid));
 
-    let query = `
-    UPDATE orders
-    SET prep_time = $1
-    WHERE orders.id = $2
-    `;
-    db.query(query, [prepTime, orderId])
-    .then(data => {
-      res.redirect('/../../backstore');
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: err.message });
-    });
   });
 
   // POST Route for when the restaurant owner specifies how long the order will take
