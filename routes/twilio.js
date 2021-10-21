@@ -15,6 +15,8 @@ module.exports = (db) => {
   // POST Route for when the customer clicks on the "Order Now" button
   router.post("/", (req, res) => {
     const order = req.body.items;
+    // const user = req.session.userId;
+    // console.log("this is the user:", user);
     let textMessage = "A customer has placed an order for ";
     for (const item of order) {
       textMessage += `${item.quantity} ${item.name}! `
@@ -29,35 +31,49 @@ module.exports = (db) => {
      })
      .then(message => console.log(message.sid));
 
+    let query = `
+    UPDATE orders
+    SET prep_time = $1
+    WHERE orders.id = $2
+    `;
+    db.query(query, [prepTime, orderId])
+    .then(data => {
+      res.redirect('/../../backstore');
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
     });
+  });
 
-    // POST Route for when the restaurant owner specifies how long the order will take
-    router.post("/prep-time-alert", (req, res) => {
-      const phoneNumber = req.body.customerPhone;
-      const prepTime = req.body.minutes;
-      const orderId = req.body.orderID;
-      const textMessage = `Thank you for your order! you can pick up your food in ${prepTime} minutes!`;
+  // POST Route for when the restaurant owner specifies how long the order will take
+  router.post("/prep-time-alert", (req, res) => {
+    const phoneNumber = req.body.customerPhone;
+    const prepTime = req.body.minutes;
+    const orderId = req.body.orderID;
+    const textMessage = `Thank you for your order! you can pick up your food in ${prepTime} minutes!`;
 
-      client.messages
-      .create({
-        body: textMessage,
-        from: '+16137042914',
-        to: phoneNumber
+    client.messages
+    .create({
+      body: textMessage,
+      from: '+16137042914',
+      to: phoneNumber
+    })
+    .then(message => {
+      let query = `
+        UPDATE orders
+        SET prep_time = $1
+        WHERE orders.id = $2
+      `;
+      db.query(query, [prepTime, orderId])
+      .then(data => {
+        res.redirect('/../../backstore');
       })
-      .then(message => {
-        let query = `
-         UPDATE orders
-         SET prep_time = $1
-         WHERE orders.id = $2
-        `;
-        db.query(query, [prepTime, orderId])
-        .then(data => {
-          res.redirect('/../../backstore');
-        })
-        .catch(err => {
-          res
-            .status(500)
-            .json({ error: err.message });
+      .catch(err => {
+        res
+         .status(500)
+          .json({ error: err.message });
         });
       });
     });
