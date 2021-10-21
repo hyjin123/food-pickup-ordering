@@ -116,7 +116,7 @@
         <p class='message-to-customer' type='text'></p>
 
         <footer class="order-footer">
-          <label class="tip">Tip: <input id='tip' type='number' min='0' max='100' placeholder="0">%</label>
+          <label class="tip">Tip: <input id='tip' type='number' min='0' max='100' placeholder="0" oninput="validity.valid||(value='');">%</label>
           <section class="customer-note">
             <label for="note">Any extra request?</label>
             <input class="form-control" id='customer-note' type='text' placeholder="e.g. less sugar, no ice, etc.">
