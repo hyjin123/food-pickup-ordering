@@ -14,33 +14,31 @@ module.exports = (db) => {
 
   // POST Route for when the customer clicks on the "Order Now" button
   router.post("/", (req, res) => {
-    const order = req.body.items;
-    let textMessageToOwner = "A customer has placed an order for ";
-    let textMessageToCustomer = "Thank you! You have placed an order for ";
-
-    for (const item of order) {
-      textMessageToOwner += `${item.quantity} ${item.name}! `
-      textMessageToCustomer += `${item.quantity} ${item.name}! `
-    };
-    // send message to the owner when order is placed
-    client.messages
-    .create({
-       body: textMessageToOwner,
-       from: '+16137042914',
-       to: '+14372180544'
-     })
-     .then(message => console.log(message.sid));
 
     // send message to the customer when order is placed
     const user = req.session.userId;
     let query = `
-      SELECT phone_number
+      SELECT phone_number, name
       FROM customers
       WHERE customers.id = $1
     `;
     db.query(query, [user])
     .then(data => {
       const customerPhoneNumber = data.rows[0].phone_number;
+      const customerName = data.rows[0].name;
+      const order = req.body.items;
+
+      let messageToOwner = `A customer (${customerName}) has placed an order for `;
+      let messageToCustomer = `Thank you ${customerName}. You have placed an order for `;
+
+      for (const item of order) {
+        messageToOwner += `${item.quantity} ${item.name}, `
+        messageToCustomer += `${item.quantity} ${item.name}, `
+      };
+
+      const textMessageToOwner = messageToOwner.substring(0, messageToOwner.length - 2) + "!";
+      const textMessageToCustomer = messageToCustomer.substring(0, messageToCustomer.length - 2) + "! You will be receiving the preparation time soon 🙂";
+
       client.messages
       .create({
          body: textMessageToCustomer,
@@ -48,10 +46,20 @@ module.exports = (db) => {
          to: customerPhoneNumber
        })
        .then(message => console.log(message.sid));
+
+      //send message to the owner when order is placed
+      client.messages
+      .create({
+        body: textMessageToOwner,
+        from: '+16137042914',
+        to: '+14372180544'
+      })
+      .then(message => console.log(message.sid));
     })
     .catch(err => {
       res.status(500).json({ error: err.message });
      });
+
   });
 
   // POST Route for when the restaurant owner specifies how long the order will take
@@ -59,7 +67,7 @@ module.exports = (db) => {
     const phoneNumber = req.body.value[0].value;
     const prepTime = req.body.value[1].value;
     const orderId = req.body.orderId;
-    const textMessage = `Thank you for your order! you can pick up your food in ${prepTime} minutes!`;
+    const textMessage = `Your order will be ready for pickup in ${prepTime} minutes! Thank you for your patience.`;
 
     client.messages
     .create({
@@ -88,7 +96,7 @@ module.exports = (db) => {
     // POST Route for when the restaurant owner clicks on the Finished button and customer gets the final text
     router.post("/pick-up-alert", (req, res) => {
 
-    const textMessage = `Food is ready!!`;
+    const textMessage = 'Your order is ready for pickup!';
 
     // send message to the customer when order is ready
     const user = req.session.userId;

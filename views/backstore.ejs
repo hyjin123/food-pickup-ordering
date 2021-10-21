@@ -81,13 +81,13 @@
           <li class="list-group-item history-title">
             <%= `${orders[order].noteInOrder}` %>
           </li>
-          <li class="list-group-item" style="text-align: left;">Send Message to <%= orders[order].customerName %>
+          <li class="list-group-item customerName" style="text-align: left;" value="<%= orders[order].customerName %>">Customer Name: <%= orders[order].customerName %>
               <form class="prep-info" method="POST" action="/api/twilio/prep-time">
                 <label>Tel.:</label>
                 <input class="form-control" name="customerPhone" value="<%= `${orders[order].customerPhone}` %> "
                   style="width: 300px">
-                <label for="<%= `${orders[order].orderId}` %>">Type prep time in minutes:</label>
-                <input type="text" class="form-control prep-time" id="<%= `${orders[order].orderId}` %>" name="minutes"
+                <label for="<%= `${orders[order].orderId}` %>">Prep time in minutes (between 1 and 120) :</label>
+                <input type="number" min="1" max="120" class="form-control prep-time" id="<%= `${orders[order].orderId}` %>" name="minutes"
                   style="width: 600px">
                 <button type="submit" class="btn btn-primary">Send Prep Time!</button>
               </form>
