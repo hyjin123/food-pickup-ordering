@@ -58,7 +58,8 @@
     <ul class="container">
       <% for(let order in orders) { %>
         <div class="list-group">
-          <li class="list-group-item history-title"><%= `Order ID: ${orders[order].orderId} --- At: ${orders[order].date.toDateString()} --- Status: ${orders[order].status} `%></li>
+          <li class="list-group-item history-title"><%= `Order ID: ${orders[order].orderId} --- At: ${orders[order].date.toDateString()} `%></li>
+          <li class="list-group-item history-title"><%= `Status: ${orders[order].status} `%></li>
           <li class="list-group-item">
             <table class="table table-sm table-borderless" style="text-align: center;">
               <tbody>
@@ -73,6 +74,8 @@
           <li class="list-group-item history-title"> <%= `${orders[order].noteInOrder}` %></li>
            <li class="list-group-item" style="text-align: left;">Send Message to <%= orders[order].customerName %>
             <form class="prep-info" method="POST" action="/api/twilio/prep-time">
+              <label>orderID</label>
+              <input class="form-control" name="orderID" value="<%= `${orders[order].orderId}` %> " style="width: 300px">
               <label>Tel.:</label>
               <input class="form-control" name="customerPhone" value="<%= `${orders[order].customerPhone}` %> " style="width: 300px">
               <label for="<%= `${orders[order].orderId}` %>">Type prep time in minutes:</label>

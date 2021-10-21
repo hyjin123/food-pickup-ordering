@@ -35,6 +35,7 @@ module.exports = (db) => {
     router.post("/prep-time-alert", (req, res) => {
       const phoneNumber = req.body.customerPhone;
       const prepTime = req.body.minutes;
+      const orderId = req.body.orderID;
       const textMessage = `Thank you for your order! you can pick up your food in ${prepTime} minutes!`;
 
       client.messages
@@ -44,10 +45,21 @@ module.exports = (db) => {
         to: phoneNumber
       })
       .then(message => {
-        //send the prep time data back so that we can use it to update the EJS
-        res.send(prepTime);
+        let query = `
+         UPDATE orders
+         SET prep_time = $1
+         WHERE orders.id = $2
+        `;
+        db.query(query, [prepTime, orderId])
+        .then(data => {
+          return data.rows;
+        })
+        .catch(err => {
+          res
+            .status(500)
+            .json({ error: err.message });
+        });
       });
-
     });
 
     // POST Route for when the restaurant owner clicks on the Finished button and customer gets the final text
@@ -66,7 +78,6 @@ module.exports = (db) => {
       });
 
     });
-
 
     // router.post('/sms', (req, res) => {
     //   const twiml = new MessagingResponse();

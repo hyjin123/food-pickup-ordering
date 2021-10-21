@@ -45,7 +45,7 @@ module.exports = (db) => {
             contents: [`${[order.item_name]} x ${[order.quantity]}`],
             buyAgain: order.price * order.quantity,
             noteInOrder: `Order note: ${order.note}` || 'No note added in this order.',
-            status: addMinutes(order.date, 40) < Date.now()? 'Completed' : `In progress. Will be ready in ${Math.round((addMinutes(order.date, 40)-Date.now())/60000)} minutes.`
+            status: addMinutes(order.date, order.prep_time) < Date.now()? 'Completed' : `In progress. Will be ready in ${Math.round((addMinutes(order.date, order.prep_time)-Date.now())/60000)} minutes.`
             };
           } else {
             orders[orderId].contents.push(`${[order.item_name]} x ${[order.quantity]}`);
