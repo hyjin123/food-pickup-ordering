@@ -65,9 +65,16 @@ module.exports = (db) => {
   // POST Route for when the restaurant owner specifies how long the order will take
   router.post("/prep-time-alert", (req, res) => {
     const phoneNumber = req.body.value[0].value;
-    const prepTime = req.body.value[1].value;
+    const minutes = req.body.value[1].value;
+    console.log(typeof minutes);
+    debugger
+    const timeNow = parseInt(req.body.timeNow);
+    console.log("time now is", timeNow)
+    console.log("time", new Date(timeNow + minutes * 60000))
+    const prepTime = new Date(timeNow + minutes * 60000).toJSON().replace("T", " ").replace("Z", "");
+    console.log("preptime is", prepTime);
     const orderId = req.body.orderId;
-    const textMessage = `Your order will be ready for pickup in ${prepTime} minutes! Thank you for your patience.`;
+    const textMessage = `Your order will be ready for pickup in ${minutes} minutes! Thank you for your patience.`;
 
     client.messages
     .create({
@@ -83,7 +90,7 @@ module.exports = (db) => {
       `;
       db.query(query, [prepTime, orderId])
       .then(data => {
-        console.log("hello");
+        res.send(prepTime);
       })
       .catch(err => {
         res

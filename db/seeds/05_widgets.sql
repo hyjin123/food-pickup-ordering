@@ -11,18 +11,18 @@ VALUES
 ('Chocolate Cupcake', 'It is cake. It is chocolate cake. It is also round, in a cup.', 1, 'https://images.unsplash.com/photo-1587668178277-295251f900ce?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=387&q=80', TRUE),
 ('Strawberry Cupcake', 'Where the sweety meets the juicy. A lifting option with a cheerful touch of color in your day.', 1, 'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80', TRUE);
 
-INSERT INTO orders (customer_id, created_at, updated_at, prep_time, note, tip)
+INSERT INTO orders (customer_id, created_at, updated_at, note, tip)
 VALUES
-(1, '2021-02-03 10:43:11.00', '2021-02-03 10:43:11.00', '40', 'Food seems delicious!', 0),
-(2, '2021-03-25 18:22:10.00', '2021-03-25 18:22:10.00', '40', 'Do you serve cold coffee?', 0),
-(2, '2021-03-23 08:35:11.00', '2021-03-23 08:35:11.00', '40', 'Last time my coffee was delicious. Cant wait to try the dessets, too!', 1),
-(3, '2021-01-18 11:08:21.00', '2021-01-18 11:08:21.00', '40', 'Because why not?', 0),
-(3, '2021-01-19 11:05:01.00', '2021-01-19 11:05:01.00', '40', 'Have a nice day =)', 0.9),
-(3, '2021-03-01 13:15:22.00', '2021-03-01 13:15:22.00', '40', 'Love the service. Will recommend!', 5),
-(4, '2021-01-01 11:30:25.00', '2021-01-01 11:30:25.00', '40', 'I am new in the city.', 0),
-(4, '2021-01-02 10:15:15.00', '2021-01-02 10:15:15.00', '40', 'May I get an extra cookie?', 1),
-(4, '2021-01-10 09:55:02.00', '2021-01-10 09:55:02.00', '40', 'Please, put a lot of cream!', 2),
-(4, '2021-03-21 11:40:15.00', '2021-03-21 11:40:15.00', '40', 'I will be there right on time.', 3);
+(1, '2021-02-03 10:43:11.00', '2021-02-03 10:43:11.00', 'Food seems delicious!', 0),
+(2, '2021-03-25 18:22:10.00', '2021-03-25 18:22:10.00', 'Do you serve cold coffee?', 0),
+(2, '2021-03-23 08:35:11.00', '2021-03-23 08:35:11.00', 'Last time my coffee was delicious. Cant wait to try the dessets, too!', 1),
+(3, '2021-01-18 11:08:21.00', '2021-01-18 11:08:21.00', 'Because why not?', 0),
+(3, '2021-01-19 11:05:01.00', '2021-01-19 11:05:01.00', 'Have a nice day =)', 0.9),
+(3, '2021-03-01 13:15:22.00', '2021-03-01 13:15:22.00', 'Love the service. Will recommend!', 5),
+(4, '2021-01-01 11:30:25.00', '2021-01-01 11:30:25.00', 'I am new in the city.', 0),
+(4, '2021-01-02 10:15:15.00', '2021-01-02 10:15:15.00', 'May I get an extra cookie?', 1),
+(4, '2021-01-10 09:55:02.00', '2021-01-10 09:55:02.00', 'Please, put a lot of cream!', 2),
+(4, '2021-03-21 11:40:15.00', '2021-03-21 11:40:15.00', 'I will be there right on time.', 3);
 
 INSERT INTO order_items (order_id, menu_item_id, quantity)
 VALUES
