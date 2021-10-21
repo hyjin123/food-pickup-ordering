@@ -55,7 +55,7 @@ module.exports = (db) => {
     });
   });
 
-  // Route to POST login: will put a cookie with the userId. 
+  // Route to POST login: will put a cookie with the userId.
   // To read the cookie, use: req.session.userId
   router.post('/login', (req, res) => {
     const email = req.body.email;
@@ -91,7 +91,7 @@ module.exports = (db) => {
   router.post('/logout', (req, res) => {
     req.session = null;
     //res.send({});
-    res.render('../views/login.ejs'); 
+    res.render('../views/login.ejs');
   });
 
   // Route to access login page
@@ -103,7 +103,7 @@ module.exports = (db) => {
       console.log(templateVars)
       return res.redirect('../..');
     }
-    res.render('../views/login.ejs'); 
+    res.render('../views/login.ejs');
   });
 
   // Route to access register page
@@ -115,7 +115,7 @@ module.exports = (db) => {
       console.log(templateVars)
       return res.redirect('../..');
     }
-    res.render('../views/register.ejs'); 
+    res.render('../views/register.ejs');
   });
 
   return router;
