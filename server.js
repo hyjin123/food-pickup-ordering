@@ -76,7 +76,7 @@ app.get("/", (req, res) => {
   const isLoggedIn = req.session.userId;
   console.log(isLoggedIn)
   const templateVars = { userId: isLoggedIn }
-  isLoggedIn ? res.render('index', templateVars) : res.render('login');
+  isLoggedIn ? ( isLoggedIn === 1 ? res.redirect('backstore') : res.render('index', templateVars) ) : res.render('login');
   //res.render("index");
 });
 

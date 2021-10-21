@@ -26,6 +26,11 @@
   <link rel="stylesheet" href="/styles/main.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
   <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/menu.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/order.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/login.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/register.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/history.css" type="text/css" />
 
   <!-- App JS -->
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
@@ -45,11 +50,17 @@
   </button>
   <!-- Top nav bar (fixed) -->
   <nav>
-  <div id="logo"><img id="logo" src="/images/cupcake.png">Cup N' CakeZ</div>
-  <ul class="nav justify-content-end"></ul>
-  <li class="nav-item">
-        <p>*** Welcome to the System ***</p>
-      </li>
+    <div id="logo"><img id="logo" src="/images/cupcake.png">Cup N' CakeZ</div>
+      <span>
+        <p class="customer-greeting">Welcome to the System!</p></span>
+      </span>
+      <ul class="nav justify-content-end">
+        <li class="nav-item">
+          <form action="/api/users/logout" method="POST">
+            <button type="submit" class="btn btn-primary">LOGOUT</button>
+          </form>
+        </li>
+    </ul>
   </nav>
 
   <!-- main container of the page -->
