@@ -30,6 +30,7 @@
   <!-- App JS -->
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
+  <script type="text/javascript" src="/scripts/backstore.js"></script>
 
   <!-- External JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
@@ -71,12 +72,14 @@
           </li>
           <li class="list-group-item history-title"> <%= `${orders[order].noteInOrder}` %></li>
            <li class="list-group-item" style="text-align: left;">Send Message to <%= orders[order].customerName %>
-          <form class="form-inline" action="/api/owner/messages" method="POST">
             <label>Tel.:</label>
             <input class="form-control" name="customerPhone" value="<%= `${orders[order].customerPhone}` %> " style="width: 300px">
-            <label>Message:</label>
-            <input class="form-control" name="msgToCustomer" style="width: 600px">
-            <button type="submit" class="btn btn-primary">Send!</button>
+          <form method="POST" action="/api/twilio">
+            <label for="prep-time">Type prep time in minutes:</label>
+            <input class="form-control" id="prep-time" name="msgToCustomer" style="width: 600px">
+            <button id="prep-time" type="submit" name="prep-time" value="hello" class="btn btn-primary">Send Prep Time!</button>
+          </form>
+            <button id="finished" type="submit" class="btn btn-primary">Finished!</button>
           </li>
         </div>
         <br>

@@ -17,7 +17,7 @@ module.exports = (db) => {
 
   router.get("/", (req, res) => {
     const query = `
-    SELECT order_id, created_at as date, prep_time, menu_items.name AS item_name, price, quantity, note, 
+    SELECT order_id, created_at as date, prep_time, menu_items.name AS item_name, price, quantity, note,
     customer_id, customers.name as customer_name, customers.phone_number as customer_phone
     FROM order_items
     JOIN orders ON order_id = orders.id
@@ -28,14 +28,14 @@ module.exports = (db) => {
     const addMinutes = function(date, minutes) {
       return new Date(date.getTime() + minutes*60000)
     }
-    
+
     db.query(query)
     .then(data => {
       const fullHistory = data.rows;
       const orders = {};
       for(let order of fullHistory) {
         let orderId = 'orderId-' + order.order_id;
-        console.log(order)
+        console.log(orderId);
         if (!orders[orderId]) {
           orders[orderId] = {
             customerId: order.customer_id,
