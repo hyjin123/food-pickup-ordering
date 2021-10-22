@@ -8,7 +8,6 @@ module.exports = (db) => {
     let query = `
     SELECT * FROM menu_items
     WHERE in_stock = TRUE`;
-    console.log(query);
     db.query(query)
       .then(data => {
         const menuItems = data.rows;

@@ -24,11 +24,6 @@ nav {
 
 }
 
-#logo {
-  width: 3em;
-  height: 3em;
-}
-
 nav a {
   font-size: 1.3em;
 }
@@ -46,6 +41,11 @@ nav a:hover {
   justify-content: center;
   padding-top: 8px;
   color: #3565B0;
+}
+
+#logo {
+  width: 3em;
+  height: 3em;
 }
 
 .customer-greeting{

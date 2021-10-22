@@ -22,19 +22,18 @@ module.exports = (db) => {
     JOIN menu_items ON menu_item_id = menu_items.id
     WHERE customer_id = $1
     ORDER BY order_id DESC;`
-    const params = [req.session.userId] 
+    const params = [req.session.userId]
 
-    const addMinutes = function(date, minutes) {
-      return new Date(date.getTime() + minutes*60000)
-    }
-    
+    // const addMinutes = function(date, minutes) {
+    //   return new Date(date.getTime() + minutes*60000)
+    // }
+
     db.query(query, params)
     .then(data => {
       const fullHistory = data.rows;
       const orders = {};
       for(let order of fullHistory) {
         let orderId = 'orderId-' + order.order_id;
-        console.log(order)
         if (!orders[orderId]) {
           orders[orderId] = {
               orderId: order.order_id,
@@ -42,7 +41,7 @@ module.exports = (db) => {
               contents: [`${[order.item_name]} x ${[order.quantity]}`],
               buyAgain: order.price * order.quantity,
               noteInOrder: `Order note: ${order.note}` || 'No note added in this order.',
-              status: addMinutes(order.date, order.prep_time) < Date.now()? 'Completed' : `In progress. Will be ready in ${Math.round((addMinutes(order.date, order.prep_time)-Date.now())/60000)} minutes.`
+              status: order.prep_time < Date.now()? 'Completed' : `In progress. Will be ready in ${Math.round((order.prep_time-Date.now())/60000)} minutes.`
             };
           } else {
             orders[orderId].contents.push(`${[order.item_name]} x ${[order.quantity]}`);
