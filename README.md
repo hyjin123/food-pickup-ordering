@@ -4,7 +4,7 @@ Welcome to CUP N' CAKEZ!
 
 !["The Front Store"](https://github.com/hyjin123/food-pickup-ordering/blob/master/docs/Front-Store.png?raw=true)
 
-!["The Back Store"](https://github.com/hyjin123/food-pickup-ordering/blob/master/docs/Backstore.png?raw=true)
+!["The Back Store"](https://github.com/hyjin123/food-pickup-ordering/blob/master/docs/Backstore-Page.png?raw=true)
 
 !["The Register Page"](https://github.com/hyjin123/food-pickup-ordering/blob/master/docs/Register-Page.png?raw=true)
 
