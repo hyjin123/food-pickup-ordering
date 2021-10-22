@@ -16,9 +16,7 @@ $(() => {
         timeNow: timeNow.getTime()
       },
       success: (data) => {
-
       },
-
       error: (err) => {
         console.log(`Error details: ${err}`);
       }

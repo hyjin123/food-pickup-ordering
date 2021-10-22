@@ -20,7 +20,7 @@ module.exports = (db) => {
     const isLoggedIn = req.session.userId;
     console.log(isLoggedIn)
     const templateVars = { userId: isLoggedIn }
-    !isLoggedIn ? res.render('login') : ( isLoggedIn !== 1 ? res.render('./index.ejs', templateVars) : null) 
+    !isLoggedIn ? res.render('login') : ( isLoggedIn !== 1 ? res.render('./index.ejs', templateVars) : null)
 
     const query = `
     SELECT order_id, created_at as date, prep_time, menu_items.name AS item_name, price, quantity, note,
@@ -52,7 +52,7 @@ module.exports = (db) => {
             contents: [`${[order.item_name]} x ${[order.quantity]}`],
             buyAgain: order.price * order.quantity,
             noteInOrder: `Order note: ${order.note}` || 'No note added in this order.',
-            status: minutes > 0 ? `${minutes} minutes`: `Completed`
+            status: minutes > 0 ? `${minutes} minutes until completed`: `Completed`
             };
           } else {
             orders[orderId].contents.push(`${[order.item_name]} x ${[order.quantity]}`);
