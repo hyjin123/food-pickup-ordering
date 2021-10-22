@@ -2,11 +2,14 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .list-group {
   display: flex;
   flex-direction: column;
+  margin-bottom: 50px;
+  border: 2px solid black;
 }
 
 .list-group-item {
@@ -16,4 +19,36 @@
 
 .prep-time {
   width: 100px;
+}
+
+.pick-up-alert {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.prep-info {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.table {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.note, .customerName {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.prep-info label {
+  display: block;
+  padding-top: 10px;
+  text-align: left;
+  padding-bottom: 5px;
+}
+
+.prep-info input {
+  margin: auto;
+  margin-bottom: 20px;
 }

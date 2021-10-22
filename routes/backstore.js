@@ -51,7 +51,7 @@ module.exports = (db) => {
             date: order.date,
             contents: [`${[order.item_name]} x ${[order.quantity]}`],
             buyAgain: order.price * order.quantity,
-            noteInOrder: `Order note: ${order.note}` || 'No note added in this order.',
+            noteInOrder: `${order.note}` || 'No note added in this order.',
             status: minutes > 0 ? `${minutes} minutes until completed`: `Completed`
             };
           } else {
