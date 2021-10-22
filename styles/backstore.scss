@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.list-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.list-group-item {
+  text-align: left;
+  width: 100%;
+}
+
+.prep-time {
+  width: 100px;
+}
