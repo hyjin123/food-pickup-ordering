@@ -26,6 +26,7 @@ $(() => {
   $(".pick-up-alert").submit(function(event) {
     event.preventDefault();
     const customerName = $(".customerName").attr('value');
+    const phoneNumber = $(this).siblings(".prep-info").find(".phone").val();
     const orderId = $('#finished').val();
 
     $.ajax('/api/twilio/pick-up-alert', {
@@ -33,7 +34,8 @@ $(() => {
       dataType: 'TEXT',
       data: {
         orderId,
-        customerName
+        customerName,
+        phoneNumber
       },
       success: (data) => {
         console.log(data);

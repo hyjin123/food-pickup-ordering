@@ -97,7 +97,7 @@
             <strong>Customer Name:</strong> <%= orders[order].customerName %>
               <form class="prep-info" method="POST" action="/api/twilio/prep-time">
                 <label><strong>Tel.:</strong></label>
-                <input class="form-control" name="customerPhone" value="<%= `${orders[order].customerPhone}` %> ">
+                <input class="form-control phone" name="customerPhone" value="<%= `${orders[order].customerPhone}` %> ">
                 <label for="<%= `${orders[order].orderId}` %>"><strong>Prep Time</strong> in minutes (between 1 and 120) :</label>
                 <input type="number" min="1" max="120" class="form-control prep-time"
                   id="<%= `${orders[order].orderId}` %>" name="minutes">
