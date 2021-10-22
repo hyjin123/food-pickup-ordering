@@ -99,15 +99,15 @@ module.exports = (db) => {
     router.post("/pick-up-alert", (req, res) => {
 
       const textMessage = 'Your order is ready for pickup!';
-
       // send message to the customer when order is ready
-      const user = req.session.userId;
+      const customerName = req.body.customerName;
+
       let query = `
         SELECT phone_number
         FROM customers
-        WHERE customers.id = $1
+        WHERE customers.name = $1
       `;
-      db.query(query, [user])
+      db.query(query, [customerName])
       .then(data => {
         const customerPhoneNumber = data.rows[0].phone_number;
         client.messages
