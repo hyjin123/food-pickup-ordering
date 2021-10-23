@@ -38,28 +38,41 @@ module.exports = (db) => {
 
       const textMessageToOwner = messageToOwner.substring(0, messageToOwner.length - 2) + "!";
       const textMessageToCustomer = messageToCustomer.substring(0, messageToCustomer.length - 2) + "! You will be receiving the preparation time soon 🙂";
+      //
 
-      client.messages
-      .create({
-         body: textMessageToCustomer,
-         from: '+16137042914',
-         to: customerPhoneNumber
-       })
-       .then(message => console.log(message.sid));
+      let queryString = `
+        SELECT phone_number
+        FROM customers
+        WHERE customers.id = 1
+      `;
+      db.query(queryString)
+        .then(data => {
+          const bossPhoneNumber = data.rows[0].phone_number;
+          client.messages
+          .create({
+             body: textMessageToCustomer,
+             from: '+16137042914',
+             to: customerPhoneNumber
+           })
+           .then(message => console.log(message.sid));
 
-      //send message to the owner when order is placed
-      client.messages
-      .create({
-        body: textMessageToOwner,
-        from: '+16137042914',
-        to: '+14372180544'
-      })
-      .then(message => console.log(message.sid));
+          //send message to the owner when order is placed
+          client.messages
+          .create({
+            body: textMessageToOwner,
+            from: '+16137042914',
+            to: bossPhoneNumber
+          })
+          .then(message => console.log(message.sid));
+        })
+        .catch(err => {
+          res.status(500).json({ error: err.message });
+         });
+      //
     })
     .catch(err => {
       res.status(500).json({ error: err.message });
      });
-
   });
 
   // POST Route for when the restaurant owner specifies how long the order will take
@@ -135,7 +148,7 @@ module.exports = (db) => {
     //   .create({
     //     body: clientMessage,
     //     from: '+16137042914',
-    //     to: '+14372180544'
+    //     to: clientNumber
     //    })
     //    .then(message => console.log(message.sid));
 
